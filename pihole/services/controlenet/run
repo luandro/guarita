@@ -1,27 +1,17 @@
 #!/usr/bin/with-contenv bash
 # shellcheck shell=bash
 
-# quit the plymouth (balena logo) service so that we can see the TTY
-# s6-echo "Stopping plymouth service..."
-# dbus-send \
-#     --system \
-#     --dest=org.freedesktop.systemd1 \
-#     --type=method_call \
-#     --print-reply \
-#     /org/freedesktop/systemd1 org.freedesktop.systemd1.Manager.StartUnit \
-#     string:"plymouth-quit.service" string:"replace"
+HORA_BLOQUEIA=$(date --date="16:47" +"%s")
+HORA_LIBERA=$(date --date="08:00" +"%s")
+AGORA=$(date +%s)
 
-# s6-echo "Setting console font to ${FONTFACE} ${FONTSIZE}..."
-# sed -i "s/^FONTFACE.*/FONTFACE=\"${FONTFACE}\"/" /etc/default/console-setup
-# sed -i "s/^FONTSIZE.*/FONTSIZE=\"${FONTSIZE}\"/" /etc/default/console-setup
-# dpkg-reconfigure console-setup 2> /dev/null > /dev/tty1
+echo $HORA_BLOQUEIA
+echo $AGORA
 
-# # wait for FTL port to become available
-# while ! nc -z 127.0.0.1 "$(</run/pihole-FTL.port)"
-# do
-#     s6-echo "Waiting for FTL on port $(</run/pihole-FTL.port)..."
-#     sleep 5
-# done
+if [[ "$AGORA" > "$HORA_BLOQUEIA" ]] || [[ "$AGORA" < "$HORA_LIBERA" ]]; then
+  echo "bloqueia"
+else
+  echo "desbloqueia"
+fi
 
-# s6-echo "Starting PADD..."
-# /usr/src/app/padd.sh 2> /dev/null > /dev/tty1
+sleep 360
