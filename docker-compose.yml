@@ -1,0 +1,37 @@
+version: "2.1"
+
+volumes:
+  pihole_config:
+  dnsmasq_config:
+
+services:
+  # https://hub.docker.com/r/pihole/pihole
+  pihole:
+    build: pihole
+    privileged: true
+    volumes:
+      - "pihole_config:/etc/pihole"
+      - "dnsmasq_config:/etc/dnsmasq.d"
+    dns:
+      - "127.0.0.1"
+      - "1.1.1.1"
+    network_mode: host
+    labels:
+      io.balena.features.dbus: "1"
+
+  # https://github.com/klutchell/unbound-dnscrypt
+  unbound:
+    build: unbound
+    privileged: true
+    ports:
+      - "5053:5053/tcp"
+      - "5053:5053/udp"
+
+  # https://github.com/balenablocks/hostname
+  hostname:
+    image: balenablocks/hostname:latest
+    restart: no
+    labels:
+      io.balena.features.supervisor-api: 1
+    environment:
+      SET_HOSTNAME: guarani

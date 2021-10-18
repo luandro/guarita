@@ -1,0 +1,5 @@
+#!/usr/bin/with-contenv bash
+# shellcheck shell=bash
+
+# s6-echo "Parando controle da net"
+# killall -9 padd.sh
