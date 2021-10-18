@@ -3,6 +3,7 @@ version: "2.1"
 volumes:
   pihole_config:
   dnsmasq_config:
+  dnscrypt_config:
 
 services:
   # https://hub.docker.com/r/pihole/pihole
@@ -19,13 +20,15 @@ services:
     labels:
       io.balena.features.dbus: "1"
 
-  # https://github.com/klutchell/unbound-dnscrypt
-  unbound:
-    build: unbound
+  # https://hub.docker.com/r/klutchell/dnscrypt-proxy
+  dnscrypt-proxy:
+    build: dnscrypt-proxy
     privileged: true
     ports:
-      - "5053:5053/tcp"
-      - "5053:5053/udp"
+      - "54:5053/tcp"
+      - "54:5053/udp"
+    volumes:
+      - "dnscrypt_config:/config"
 
   # https://github.com/balenablocks/hostname
   hostname:
