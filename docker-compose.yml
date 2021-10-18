@@ -22,13 +22,16 @@ services:
 
   # https://hub.docker.com/r/klutchell/dnscrypt-proxy
   dnscrypt-proxy:
-    build: dnscrypt-proxy
+    image: klutchell/dnscrypt-proxy
     privileged: true
-    ports:
-      - "54:5053/tcp"
-      - "54:5053/udp"
+    expose:
+      - "5300/udp"
+      - "5300/tcp"
     volumes:
       - "dnscrypt_config:/config"
+    dns:
+      - 1.1.1.1
+    restart: unless-stopped
 
   # https://github.com/balenablocks/hostname
   hostname:
@@ -37,4 +40,4 @@ services:
     labels:
       io.balena.features.supervisor-api: 1
     environment:
-      SET_HOSTNAME: guarani
+      SET_HOSTNAME: pihole
