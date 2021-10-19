@@ -37,5 +37,8 @@ ENV PIHOLE_DNS_ 1.1.1.1;1.0.0.1
 ENV FONTFACE Terminus
 ENV FONTSIZE 8x14
 ENV WEBPASSWORD guarani
+ENV BLOCK '17:00'
+ENV UNBLOCK '08:00'
+
 
 ENV DBUS_SYSTEM_BUS_ADDRESS 'unix:path=/host/run/dbus/system_bus_socket'

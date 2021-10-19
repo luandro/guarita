@@ -1,17 +1,16 @@
 #!/usr/bin/with-contenv bash
 # shellcheck shell=bash
 
-HORA_BLOQUEIA=$(date --date="16:47" +"%s")
-HORA_LIBERA=$(date --date="08:00" +"%s")
+HORA_BLOQUEIA=$(date --date=$BLOCK +"%s")
+HORA_LIBERA=$(date --date=$UNBLOCK +"%s")
 AGORA=$(date +%s)
 
-echo $HORA_BLOQUEIA
-echo $AGORA
+echo $BLOCK +" em segundos "+  $HORA_BLOQUEIA
+
+pihole --regex -d '.*'
 
 if [[ "$AGORA" > "$HORA_BLOQUEIA" ]] || [[ "$AGORA" < "$HORA_LIBERA" ]]; then
-  echo "bloqueia"
-else
-  echo "desbloqueia"
+  pihole --regex '.*'
 fi
 
 sleep 360
