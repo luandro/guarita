@@ -39,6 +39,7 @@ ENV FONTSIZE 8x14
 ENV WEBPASSWORD guarani
 ENV BLOCK '17:00'
 ENV UNBLOCK '08:00'
+ENV TZ 'America/Sao_Paulo'
 
 
 ENV DBUS_SYSTEM_BUS_ADDRESS 'unix:path=/host/run/dbus/system_bus_socket'

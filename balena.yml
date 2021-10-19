@@ -31,6 +31,7 @@ data:
     - FBCP_DISPLAY: ""
     - BLOCK: '17:00'
     - UNBLOCK: '08:00'
+    - TZ: 'America/Sao_Paulo'
   defaultDeviceType: "raspberrypi3"
   supportedDeviceTypes:
     - "raspberry-pi2"
