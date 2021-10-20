@@ -1,4 +1,4 @@
-FROM pihole/pihole:2021.10
+FROM pihole/pihole:latest
 
 WORKDIR /usr/src/app
 
@@ -37,8 +37,8 @@ ENV PIHOLE_DNS_ 1.1.1.1;1.0.0.1
 ENV FONTFACE Terminus
 ENV FONTSIZE 8x14
 ENV WEBPASSWORD guarani
-ENV BLOCK '17:00'
-ENV UNBLOCK '08:00'
+ENV BLOCK 17:00
+ENV UNBLOCK 08:00
 ENV TZ 'America/Sao_Paulo'
 
 
