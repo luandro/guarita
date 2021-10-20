@@ -32,7 +32,7 @@ data:
     - BLOCK: '17:00'
     - UNBLOCK: '08:00'
     - TZ: 'America/Sao_Paulo'
-  defaultDeviceType: "raspberrypi3"
+  defaultDeviceType: "raspberrypi3-64"
   supportedDeviceTypes:
     - "raspberry-pi2"
     - "raspberrypi3"
