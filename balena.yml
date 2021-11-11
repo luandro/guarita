@@ -27,6 +27,7 @@ data:
   applicationEnvironmentVariables:
     - INTERFACE: 'eth0'
     - WEBPASSWORD: 'balena'
+    - SET_HOSTNAME: pihole
     - PIHOLE_DNS_: '1.1.1.1;1.0.0.1'
     - FBCP_DISPLAY: ""
     - BLOCK: '17:00'
