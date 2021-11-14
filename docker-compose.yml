@@ -3,35 +3,129 @@ version: "2.1"
 volumes:
   pihole_config:
   dnsmasq_config:
-
+  proxy:
+  certs:
+  db:
+  jellyfin-config:
+  jellyfin-cache:
+  media:
+  jellyfin-lib:
+  sync-config:
+  sync-downloads:
 services:
   # https://hub.docker.com/r/pihole/pihole
-  pihole:
-    build: pihole
-    privileged: true
-    volumes:
-      - "pihole_config:/etc/pihole"
-      - "dnsmasq_config:/etc/dnsmasq.d"
-    dns:
-      - "127.0.0.1"
-      - "1.1.1.1"
-    network_mode: host
-    labels:
-      io.balena.features.dbus: "1"
+  # pihole:
+  #   build: pihole
+  #   privileged: true
+  #   volumes:
+  #     - "pihole_config:/etc/pihole"
+  #     - "dnsmasq_config:/etc/dnsmasq.d"
+  #   dns:
+  #     - "127.0.0.1"
+  #     - "1.1.1.1"
+  #   ports:
+  #     - "53:53"
+  #     - "67:67"
+  #     - "84:80"
+  #   # network_mode: host
+  #   labels:
+  #     io.balena.features.dbus: "1"
 
   # https://github.com/klutchell/unbound-dnscrypt
-  unbound:
-    build: unbound
-    privileged: true
-    ports:
-      - "5053:5053/tcp"
-      - "5053:5053/udp"
+  # unbound:
+  #   build: unbound
+  #   privileged: true
+  #   ports:
+  #     - "5053:5053/tcp"
+  #     - "5053:5053/udp"
 
   # https://github.com/balenablocks/hostname
   hostname:
     image: balenablocks/hostname:latest
-    restart: no
+    restart: 'no'
     labels:
       io.balena.features.supervisor-api: 1
     environment:
-      SET_HOSTNAME: pihole
+      SET_HOSTNAME: guarani
+  # https://hub.docker.com/r/jc21/nginx-proxy-manager/
+  proxy:
+    network_mode: host
+    build: proxy
+    # ports:
+    #   - '80:80'
+    #   - '81:81'
+    #   - '443:443'
+    volumes:
+      - proxy:/data
+      - certs:/etc/letsencrypt
+    depends_on:
+      - db
+  # https://hub.docker.com/_/mariadb/
+  db:
+    image: mariadb:10.5.5
+    volumes:
+      - db:/var/lib/mysql
+    environment:
+      MARIADB_ROOT_PASSWORD: "npm"
+      MYSQL_DATABASE: "npm"
+      MYSQL_USER: "npm"
+      MYSQL_PASSWORD: "npm"
+      ROOT_PASSWORD: "npm"
+    ports:
+      - "3306:3306"
+  # https://hub.docker.com/_/mariadb/
+  # sqldump:
+  #   build: mariadb
+  #   command: "/sqldump.sh"
+  #   environment:
+  #     MYSQL_DATABASE: "npm"
+  #   volumes:
+  #     - db:/var/lib/mysql
+  #   depends_on:
+  #     - db
+  # https://hub.docker.com/r/jc21/nginx-proxy-manager/
+  jellyfin:
+    image: jellyfin/jellyfin
+    restart: unless-stopped
+    ports:
+      - 82:8096
+      - 8920:8920 #optional
+      - 7359:7359/udp #optional
+      - 1900:1900/udp #optional
+    volumes:
+        - jellyfin-config:/config
+        - jellyfin-cache:/cache
+        - media:/media
+        - jellyfin-lib:/opt/vc/lib
+    environment:
+        PUID: 1000
+        PGID: 1000
+        JELLYFIN_PublishedServerUrl: guarani.io
+    #devices:
+      #- /dev/vchiq:/dev/vchiq #hardware acceleration for Rasp 3 e 4
+      # - /dev/vcsm:/dev/vcsm #hardware acceleration for Rasp 3
+  # https://hub.docker.com/r/filebrowser/filebrowser
+  filebrowser:
+    image: filebrowser/filebrowser
+    ports:
+      - 83:80
+    volumes:
+      - media:/srv
+    environment:
+      PGID: 1000
+      PUID: 1000
+    command: -- c
+  resilio-sync:
+    image: lscr.io/linuxserver/resilio-sync
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: America/Brasil
+    volumes:
+      - sync-config:/config
+      - sync-downloads:/downloads
+      - "media:/root/Resilio Sync"
+    ports:
+      - 8888:8888
+      - 55555:55555
+    restart: unless-stopped

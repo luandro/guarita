@@ -32,6 +32,7 @@ data:
     - DHCP_DURATION: '24'
     - FBCP_DISPLAY: ""
     - INTERFACE: 'eth0'
+    - SET_HOSTNAME: pihole
     - PIHOLE_DNS_: '1.1.1.1;1.0.0.1'
     - WEBPASSWORD: 'balena'
     - UNBLOCK: '08:00'
