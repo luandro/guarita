@@ -15,7 +15,7 @@ pihole --white-regex '(\.|^)whispersystems\.org$'
 pihole --white-regex '(\.|^)souqcdn\.com$'
 
 # Enable DHCP
-pihole -a enabledhcp "10.0.0.1" "10.0.0.255" "10.0.0.1" "24" "peti"
+pihole -a enabledhcp "${DHCP_START}" "${DHCP_END}" "${DHCP_GATEWAY}" "${DHCP_DURATION}" "peti"
 
 while [ -z "$(ip -o -4 addr show dev "${INTERFACE}")" ]
 do

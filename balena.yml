@@ -25,11 +25,15 @@ data:
   applicationConfigVariables:
     - BALENA_HOST_CONFIG_gpu_mem: 64
   applicationEnvironmentVariables:
-    - INTERFACE: 'eth0'
-    - WEBPASSWORD: 'balena'
-    - PIHOLE_DNS_: '1.1.1.1;1.0.0.1'
-    - FBCP_DISPLAY: ""
     - BLOCK: '17:00'
+    - DHCP_START: '10.0.0.2'
+    - DHCP_END: '10.0.0.254'
+    - DHCP_GATEWAY: '10.0.0.1'
+    - DHCP_DURATION: '24'
+    - FBCP_DISPLAY: ""
+    - INTERFACE: 'eth0'
+    - PIHOLE_DNS_: '1.1.1.1;1.0.0.1'
+    - WEBPASSWORD: 'balena'
     - UNBLOCK: '08:00'
     - TZ: 'America/Sao_Paulo'
   defaultDeviceType: "raspberrypi3-64"
