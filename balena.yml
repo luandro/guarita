@@ -1,4 +1,4 @@
-name: "Pi-hole"
+name: "Pety"
 type: "sw.application"
 version: 2021.10.0
 description: "Peti uses Pi-Hole to schedule Internet blocks, sync folders accross devices and show media using Jellyfin"
@@ -12,20 +12,31 @@ post-provisioning: >-
   On your router or DHCP server assign a static IP to your Pi-hole device, and set your clients DNS to the same IP address.
   
   Documentation for Pi-hole can be found at https://docs.pi-hole.net/
+
+  Set the BLOCK and UNBLOCK variables to control web blocking schedule.
+
+  Configure the Nginx Proxy Manager with user "admin@example.com" and password "changeme".
+
+  Configure Jellyfin following the docs: https://jellyfin.org/docs/general/quick-start.html
+
+  Login to Filebrowser using user "admin" and password ""admin"
+
+  Configure Resilio Sync following the docs: https://www.resilio.com/tech/sync-tutorials-and-howto/
 assets:
   repository:
     type: "blob.asset"
     data:
-      url: "https://github.com/klutchell/balena-pihole"
+      url: "https://github.com/luandro/guarita"
   logo:
     type: "blob.asset"
     data:
-      url: "https://raw.githubusercontent.com/klutchell/balena-pihole/main/logo.png"
+      url: "https://github.com/luandro/guarita/raw/main/logo.png"
 data:
   applicationConfigVariables:
     - BALENA_HOST_CONFIG_gpu_mem: 64
   applicationEnvironmentVariables:
     - BLOCK: '17:00'
+    - UNBLOCK: '08:00'
     - DHCP_START: '10.0.0.2'
     - DHCP_END: '10.0.0.254'
     - DHCP_GATEWAY: '10.0.0.1'
@@ -35,7 +46,6 @@ data:
     - SET_HOSTNAME: pihole
     - PIHOLE_DNS_: '1.1.1.1;1.0.0.1'
     - WEBPASSWORD: 'balena'
-    - UNBLOCK: '08:00'
     - TZ: 'America/Sao_Paulo'
   defaultDeviceType: "raspberrypi3-64"
   supportedDeviceTypes:
