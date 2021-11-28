@@ -14,31 +14,25 @@ volumes:
   sync-downloads:
 services:
   # https://hub.docker.com/r/pihole/pihole
-  # pihole:
-  #   build: pihole
-  #   privileged: true
-  #   volumes:
-  #     - "pihole_config:/etc/pihole"
-  #     - "dnsmasq_config:/etc/dnsmasq.d"
-  #   dns:
-  #     - "127.0.0.1"
-  #     - "1.1.1.1"
-  #   ports:
-  #     - "53:53"
-  #     - "67:67"
-  #     - "84:80"
-  #   # network_mode: host
-  #   labels:
-  #     io.balena.features.dbus: "1"
-
+  pihole:
+    build: pihole
+    network_mode: host
+    privileged: true
+    volumes:
+      - "pihole_config:/etc/pihole"
+      - "dnsmasq_config:/etc/dnsmasq.d"
+    dns:
+      - "127.0.0.1"
+      - "1.1.1.1"
+    labels:
+      io.balena.features.dbus: "1"
   # https://github.com/klutchell/unbound-dnscrypt
-  # unbound:
-  #   build: unbound
-  #   privileged: true
-  #   ports:
-  #     - "5053:5053/tcp"
-  #     - "5053:5053/udp"
-
+  unbound:
+    build: unbound
+    privileged: true
+    ports:
+      - "5053:5053/tcp"
+      - "5053:5053/udp"
   # https://github.com/balenablocks/hostname
   hostname:
     image: balenablocks/hostname:latest
@@ -49,12 +43,11 @@ services:
       SET_HOSTNAME: guarani
   # https://hub.docker.com/r/jc21/nginx-proxy-manager/
   proxy:
-    network_mode: host
     build: proxy
-    # ports:
-    #   - '80:80'
-    #   - '81:81'
-    #   - '443:443'
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
     volumes:
       - proxy:/data
       - certs:/etc/letsencrypt
@@ -66,7 +59,7 @@ services:
     volumes:
       - db:/var/lib/mysql
     environment:
-      MARIADB_ROOT_PASSWORD: "npm"
+      MYSQL_ROOT_PASSWORD: "npm"
       MYSQL_DATABASE: "npm"
       MYSQL_USER: "npm"
       MYSQL_PASSWORD: "npm"
@@ -124,7 +117,7 @@ services:
     volumes:
       - sync-config:/config
       - sync-downloads:/downloads
-      - "media:/root/Resilio Sync"
+      - media:/sync
     ports:
       - 8888:8888
       - 55555:55555

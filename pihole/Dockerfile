@@ -1,4 +1,5 @@
-FROM pihole/pihole:latest
+# https://hub.docker.com/r/pihole/pihole/tags
+FROM pihole/pihole:2021.10.1
 
 WORKDIR /usr/src/app
 
@@ -7,18 +8,9 @@ COPY services/ /etc/services.d/
 
 ENV DEBIAN_FRONTEND noninteractive
 
-# hadolint ignore=DL3008
 # RUN apt-get update && \
 # 	apt-get install --no-install-recommends -y console-setup kmod dbus && \
 # 	apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# hadolint ignore=SC2016
-RUN sed '/$AUTHORIZED_HOSTNAMES = array(/ a "balena-devices.com",' -i /var/www/html/admin/scripts/pi-hole/php/auth.php
-
-# https://serverfault.com/a/817791
-# force dnsmasq to bind only the interfaces it is listening on
-# otherwise dnsmasq will fail to start since balena is using 53 on some interfaces
-RUN echo "bind-interfaces" >> /etc/dnsmasq.conf
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -37,9 +29,13 @@ ENV PIHOLE_DNS_ 1.1.1.1;1.0.0.1
 ENV FONTFACE Terminus
 ENV FONTSIZE 8x14
 ENV WEBPASSWORD guarani
+ENV VIRTUAL_HOST balena-devices.com
 ENV BLOCK 17:00
 ENV UNBLOCK 08:00
 ENV TZ 'America/Sao_Paulo'
-
-
+ENV WEB_PORT 84
+ENV DHCP_START '10.0.0.2'
+ENV DHCP_END '10.0.0.254'
+ENV DHCP_GATEWAY '10.0.0.1'
+ENV DHCP_DURATION '24'
 ENV DBUS_SYSTEM_BUS_ADDRESS 'unix:path=/host/run/dbus/system_bus_socket'
