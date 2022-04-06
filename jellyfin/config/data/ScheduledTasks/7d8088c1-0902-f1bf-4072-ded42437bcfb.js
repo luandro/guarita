@@ -1,1 +1,0 @@
-{"StartTimeUtc":"2022-04-03T19:20:53.1219318Z","EndTimeUtc":"2022-04-03T19:20:53.6762619Z","Status":"Completed","Name":"Limpar pasta de transcodificação","Key":"DeleteTranscodeFiles","Id":"7d8088c10902f1bf4072ded42437bcfb"}
