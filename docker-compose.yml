@@ -57,7 +57,7 @@ services:
       #- /dev/vchiq:/dev/vchiq #hardware acceleration for Rasp 3 e 4
       # - /dev/vcsm:/dev/vcsm #hardware acceleration for Rasp 3
   sync:
-    image: lscr.io/linuxserver/syncthing
+    build: sync
     environment:
       PUID: 1000
       PGID: 1000
