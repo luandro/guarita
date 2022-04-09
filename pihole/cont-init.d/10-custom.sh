@@ -5,18 +5,6 @@ set -e
 
 pihole -a -p "${WEBPASSWORD}" || true
 
-# Add Whitelist
-pihole --white-regex '(\.|^)whatsapp\.com$'
-pihole --white-regex '(\.|^)whatsapp\.net$'
-pihole --white-regex '(\.|^)fbcdn\.net$'
-pihole --white-regex '(\.|^)wa\.me$'
-pihole --white-regex '(\.|^)signal\.org$'
-pihole --white-regex '(\.|^)whispersystems\.org$'
-pihole --white-regex '(\.|^)souqcdn\.com$'
-
-# Enable DHCP
-pihole -a enabledhcp "${DHCP_START}" "${DHCP_END}" "${DHCP_GATEWAY}" "${DHCP_DURATION}" "peti"
-
 while [ -z "$(ip -o -4 addr show dev "${INTERFACE}")" ]
 do
    echo "Waiting for IPv4 address on ${INTERFACE}..."
@@ -27,3 +15,10 @@ done
 # force dnsmasq to bind only the interfaces it is listening on
 # otherwise dnsmasq will fail to start since balena is using 53 on some interfaces
 echo "bind-interfaces" > /etc/dnsmasq.d/balena.conf
+
+# TODO: Fetch ip address from Balena supervisor and generate custom dns:
+# Python example:
+# WGET = subprocess.Popen (['wget', '-qO-', os.environ["BALENA_SUPERVISOR_ADDRESS"]+"/v1/device?apikey="+os.environ["BALENA_SUPERVISOR_API_KEY"]],  stdout=subprocess.PIPE)
+# output = subprocess.check_output ([ "jq", "-r", ".ip_address" ], stdin=WGET.stdout).split()
+# WGET.wait()
+# IP_ADDRESS = output[1]

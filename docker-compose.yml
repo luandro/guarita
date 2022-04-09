@@ -14,19 +14,17 @@ services:
   pihole:
     build: pihole
     network_mode: host
-    privileged: true
+    cap_add:
+      - NET_ADMIN
     volumes:
       - "pihole_config:/etc/pihole"
       - "dnsmasq_config:/etc/dnsmasq.d"
     dns:
       - "127.0.0.1"
       - "1.1.1.1"
-    labels:
-      io.balena.features.dbus: "1"
   # https://github.com/klutchell/unbound-dnscrypt
   unbound:
     build: unbound
-    privileged: true
     ports:
       - "5053:5053/tcp"
       - "5053:5053/udp"
