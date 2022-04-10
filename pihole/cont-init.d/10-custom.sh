@@ -3,7 +3,16 @@
 
 set -e
 
+# SET PIHOLE ADMIN WEB PASSWORD
+
 pihole -a -p "${WEBPASSWORD}" || true
+
+# SET DOMAIN FOR LOCAL SERVICES
+
+DOMAIN="${LOCAL_DOMAIN:=nhandeflix.com}"
+IP="${LOCAL_IP:=192.168.1.13}"
+
+echo "address=/$DOMAIN/$IP" > /etc/dnsmasq.d/03-custom-dns.conf
 
 while [ -z "$(ip -o -4 addr show dev "${INTERFACE}")" ]
 do

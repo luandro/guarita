@@ -3,8 +3,10 @@ FROM pihole/pihole:2022.04.2
 
 WORKDIR /usr/src/app
 
+ENV LOCAL_DOMAIN nhandeflix.com
+ENV LOCAL_IP 192.168.1.13
+
 COPY cont-init.d/ /etc/cont-init.d/
-COPY custom-dns/* /etc/dnsmasq.d/
 
 ENV DEBIAN_FRONTEND noninteractive
 
