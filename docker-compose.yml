@@ -9,7 +9,9 @@ volumes:
   jellyfin-lib:
   sync-config:
   sync-downloads:
+  web-portal:
 services:
+  # httpd
   # https://hub.docker.com/r/pihole/pihole
   pihole:
     build: pihole
@@ -35,7 +37,7 @@ services:
     labels:
       io.balena.features.supervisor-api: 1
     environment:
-      SET_HOSTNAME: guarani
+      SET_HOSTNAME: nhandeflix
   jellyfin:
     image: jellyfin/jellyfin
     restart: unless-stopped
@@ -45,14 +47,17 @@ services:
       - 7359:7359/udp #optional
       - 1900:1900/udp #optional
     volumes:
-        - jellyfin-config:/config
+        - jellyfin-config:/config-nhandeflix
         - jellyfin-cache:/cache
         - media:/media
         - jellyfin-lib:/opt/vc/lib
     environment:
-        PUID: 1000
-        PGID: 1000
-        JELLYFIN_PublishedServerUrl: 192.168.1.13
+      JELLYFIN_DATA_DIR: /config-nhandeflix/data
+      JELLYFIN_LOG_DIR: /config-nhandeflix/log
+      JELLYFIN_CONFIG_DIR: /config-nhandeflix
+      PUID: 1000
+      PGID: 1000
+      JELLYFIN_PublishedServerUrl: 192.168.1.13
     #devices:
       #- /dev/vchiq:/dev/vchiq #hardware acceleration for Rasp 3 e 4
       # - /dev/vcsm:/dev/vcsm #hardware acceleration for Rasp 3
@@ -64,7 +69,9 @@ services:
       TZ: America/Brasil
     volumes:
       - sync-config:/config
-      - media:/data
+      - media:/config/media
+      - jellyfin-config:/config/jellyfin-config
+      - web-portal:/config/web-portal
     ports:
       - 82:8384
       - 22000:22000/tcp

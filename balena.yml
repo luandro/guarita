@@ -1,6 +1,6 @@
 name: "Pety"
 type: "sw.application"
-version: 2022.04.03
+version: 2022.04.09
 description: "Peti uses Pi-Hole to schedule Internet blocks, sync folders accross devices and show media using Jellyfin"
 post-provisioning: >-
   ## Usage instructions
@@ -36,10 +36,18 @@ data:
     - BALENA_HOST_CONFIG_gpu_mem: 64
   applicationEnvironmentVariables:
     - INTERFACE: 'eth0'
-    - SET_HOSTNAME: pihole
+    - SET_HOSTNAME: nhandeflix
     - PIHOLE_DNS_: '1.1.1.1;1.0.0.1'
-    - WEBPASSWORD: 'balena'
+    - WEBPASSWORD: 'jekupe'
     - TZ: 'America/Sao_Paulo'
+    - LOCAL_DOMAIN: 'nhandeflix.com'
+    - LOCAL_IP: 192.168.1.13
+    - SYNC_ID_PRINCIPAL: NJXQYKR-QKAB5H6-HPVA3J6-3RFWNEV-DNRODEM-DLUKMVO-MHVRVB5-CE6ONAN
+    - SYNC_NOME_PRINCIPAL: Tecendo Redes
+    - SYNC_ID_ACERVO: gzbu3-uenc4
+    - SYNC_NOME_ACERVO: Povos Indígenas no Brasil
+    - SYNC_ID_CONFIG: hgehj-9mdva
+    - SYNC_NOME_CONFIG: jellyfin-config
   defaultDeviceType: "raspberrypi3-64"
   supportedDeviceTypes:
     - "raspberry-pi2"
