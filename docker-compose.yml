@@ -26,7 +26,9 @@ services:
       - "1.1.1.1"
   # https://github.com/klutchell/unbound-dnscrypt
   unbound:
-    build: unbound
+    build:
+      context: unbound
+    privileged: true
     ports:
       - "5053:5053/tcp"
       - "5053:5053/udp"
@@ -37,7 +39,7 @@ services:
     labels:
       io.balena.features.supervisor-api: 1
     environment:
-      SET_HOSTNAME: nhandeflix
+      SET_HOSTNAME: guarani
   jellyfin:
     image: lscr.io/linuxserver/jellyfin
     restart: unless-stopped
@@ -47,26 +49,22 @@ services:
       - 7359:7359/udp #optional
       - 1900:1900/udp #optional
     volumes:
-        - jellyfin-config:/config
-        - media:/data
+      - 'jellyfin-config:/config'
+      - 'jellyfin-cache:/cache'
+      - 'media:/media'
+      - 'jellyfin-lib:/opt/vc/lib'
     environment:
-      PUID: 1000
-      PGID: 1000
-      JELLYFIN_PublishedServerUrl: 192.168.1.13
-    #devices:
-      #- /dev/vchiq:/dev/vchiq #hardware acceleration for Rasp 3 e 4
-      # - /dev/vcsm:/dev/vcsm #hardware acceleration for Rasp 3
+      PUID: '1000'
+      PGID: '1000'
   sync:
-    build: sync
+    image: lscr.io/linuxserver/syncthing
     environment:
       PUID: 1000
       PGID: 1000
       TZ: America/Brasil
     volumes:
-      - sync-config:/config
-      - media:/config/media
-      - jellyfin-config:/config/jellyfin-config
-      - web-portal:/config/web-portal
+      - 'sync-config:/config'
+      - 'media:/data'
     ports:
       - 82:8384
       - 22000:22000/tcp
