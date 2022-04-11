@@ -41,7 +41,7 @@ services:
     environment:
       SET_HOSTNAME: guarani
   jellyfin:
-    image: lscr.io/linuxserver/jellyfin
+    image: jellyfin/jellyfin
     restart: unless-stopped
     ports:
       - 80:8096
