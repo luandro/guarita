@@ -3,7 +3,7 @@
 
 echo "=======" "Adiciona variaveis do Acervo" "====="
 mkdir -p /config/jellyfin-config
-chmod 2777 -R /config
+chown -R 1000:1000 /config
 sed -i -r "s/#ID_PRINCIPAL/$SYNC_ID_PRINCIPAL/g" /config/config.xml
 sed -i -r "s/#NOME_PRINCIPAL/$SYNC_NOME_PRINCIPAL/g" /config/config.xml
 sed -i -r "s/#ID_ACERVO/$SYNC_ID_ACERVO/g" /config/config.xml

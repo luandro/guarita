@@ -39,7 +39,7 @@ services:
     environment:
       SET_HOSTNAME: nhandeflix
   jellyfin:
-    image: jellyfin/jellyfin
+    image: lscr.io/linuxserver/jellyfin
     restart: unless-stopped
     ports:
       - 80:8096
@@ -47,14 +47,9 @@ services:
       - 7359:7359/udp #optional
       - 1900:1900/udp #optional
     volumes:
-        - jellyfin-config:/config-nhandeflix
-        - jellyfin-cache:/cache
-        - media:/media
-        - jellyfin-lib:/opt/vc/lib
+        - jellyfin-config:/config
+        - media:/data
     environment:
-      JELLYFIN_DATA_DIR: /config-nhandeflix/data
-      JELLYFIN_LOG_DIR: /config-nhandeflix/log
-      JELLYFIN_CONFIG_DIR: /config-nhandeflix
       PUID: 1000
       PGID: 1000
       JELLYFIN_PublishedServerUrl: 192.168.1.13
