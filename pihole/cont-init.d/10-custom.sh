@@ -6,6 +6,9 @@ set -e
 # SET PIHOLE ADMIN WEB PASSWORD
 
 pihole -a -p "${WEBPASSWORD}" || true
+# TEMPORÁRIO: remover nos próximos releases
+pihole --regex -d '.*'
+pihole -a disabledhcp
 
 # SET DOMAIN FOR LOCAL SERVICES
 

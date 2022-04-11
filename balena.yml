@@ -1,6 +1,6 @@
 name: "Pety"
 type: "sw.application"
-version: 2022.04.09
+version: 2.0.1
 description: "Peti uses Pi-Hole to schedule Internet blocks, sync folders accross devices and show media using Jellyfin"
 post-provisioning: >-
   ## Usage instructions
