@@ -57,7 +57,7 @@ services:
       PUID: '1000'
       PGID: '1000'
   sync:
-    image: lscr.io/linuxserver/syncthing
+    build: sync
     environment:
       PUID: 1000
       PGID: 1000
