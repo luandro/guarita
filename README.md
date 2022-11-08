@@ -41,6 +41,34 @@ Device Variables apply to all services within the application, and can be applie
 | `PIHOLE_DNS_`  | `1.1.1.1;1.0.0.1`  | Tell Pi-hole where to forward DNS requests that aren’t blocked. We’re using Cloudflare by default but you can specify your own using IPs delimited by semi-colons.                                                            |
 | `ServerIP`     | `x.x.x.x`          | Set to your device's primary network IPv4 address, used by web block modes and lighttpd bind.                                                                                                                                 |
 | `SET_HOSTNAME` | `pihole`           | Set a custom hostname on application start.                                                                                                                                                                                   |
+## Remote Support
+
+In order to ssh into the devices you'll need to be part of the org that created the fleet and have your public ssh key added to the [Balena Dashboard](https://www.balena.io/docs/learn/manage/ssh-access/#add-an-ssh-key-to-balenacloud). Balena devices use port `22222` for ssh. The easiest way to work with Balena remotely is by installing the [Balena CLI](https://www.balena.io/docs/reference/balena-cli/).And be sure to check documentation for more information on [ssh access](https://www.balena.io/docs/learn/manage/ssh-access/).
+
+To ssh into a machine simply run:
+
+```
+balena ssh <uuid>
+```
+
+Replacing with the device's uuid which can be obtained from the cli or the cloud dashboard. If we want to enter the dashboard of a router on the device's network, first you'll need to tunnel the ssh port:
+
+```
+balena tunnel <uuid> -p 22222:22222
+```
+
+On another terminal ssh into local host which is tunneling the device, using the `-D` option:
+```
+ssh -D 9090 gh_luandro@localhost -p 22222
+```
+
+Then finally configure a sock5 proxy on the browser using the gui, or with [Chromium](https://www.chromium.org/getting-involved/download-chromium/) installed, run in another terminal:
+```
+chromium --proxy-server="socks5://localhost:9090"
+```
+
+The browser window that opens up will be tunneling the device, so if a router's ip is `192.168.1.1` opening that in the browser will open the router's dashboard if it's running on router's port 80.
+
 
 ## Usage
 
