@@ -1,6 +1,6 @@
 name: "Pety"
 type: "sw.application"
-version: 2.0.4
+version: 3.0.0
 description: "Peti uses Pi-Hole to schedule Internet blocks, sync folders accross devices and show media using Jellyfin"
 post-provisioning: >-
   ## Usage instructions
@@ -39,6 +39,10 @@ data:
     - SET_HOSTNAME: nhandeflix
     - PIHOLE_DNS_: '1.1.1.1;1.0.0.1'
     - WEBPASSWORD: 'jekupe'
+    - ADLISTS_URL: '
+        https://raw.githubusercontent.com/chadmayfield/my-pihole-blocklists/master/lists/pi_blocklist_porn_top1m.list
+        https://raw.githubusercontent.com/kboghdady/youTube_ads_4_pi-hole/master/youtubelist.txt
+        '
     - TZ: 'America/Sao_Paulo'
     - LOCAL_DOMAIN: 'nhandeflix.com'
     - LOCAL_IP: 192.168.1.13
