@@ -10,6 +10,7 @@ volumes:
   sync-config:
   sync-downloads:
   web-portal:
+  pihole-updatelists:
 services:
   # httpd
   # https://hub.docker.com/r/pihole/pihole
@@ -18,9 +19,12 @@ services:
     network_mode: host
     cap_add:
       - NET_ADMIN
+    environment:
+      ADLISTS_URL: "https://raw.githubusercontent.com/chadmayfield/my-pihole-blocklists/master/lists/pi_blocklist_porn_top1m.list https://raw.githubusercontent.com/kboghdady/youTube_ads_4_pi-hole/master/youtubelist.txt"
     volumes:
       - "pihole_config:/etc/pihole"
       - "dnsmasq_config:/etc/dnsmasq.d"
+      - 'pihole-updatelists:/etc/pihole-updatelists/'
     dns:
       - "127.0.0.1"
       - "1.1.1.1"
