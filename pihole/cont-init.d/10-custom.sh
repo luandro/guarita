@@ -8,7 +8,7 @@ echo "=======" "Setando senha do Pihole" "====="
 pihole -a -p "${WEBPASSWORD}" || true
 # TEMPORÁRIO: remover nos próximos releases
 echo "=======" "Removendo bloqueio e desabilitando DHCP" "====="
-pihole --regex -d '.*'
+# pihole --regex -d '.*' # Pode estar dando problema
 pihole -a disabledhcp
 
 # SET DOMAIN FOR LOCAL SERVICES
@@ -50,6 +50,8 @@ grep '^r.*googlevideo\.com' /var/log/pihole*.log \
 
 # Add to Pi-hole adlists if it's not there already
 if ! grep $FILE < /etc/pihole/adlists.list; then echo "file://$FILE" >> /etc/pihole/adlists.list; fi;
+
+# Add pornography list to pihole
 
 
 # Show interfaces
