@@ -38,6 +38,7 @@ jobs:
             preload \
               "$BALENA_IMAGE.img" \
               --fleet ${{secrets.BALENA_FLEET}} \
+              --dont-check-arch  \
               --commit latest
           balena_cli_version: 13.7.1
 
