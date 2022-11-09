@@ -10,6 +10,7 @@ volumes:
   sync-config:
   sync-downloads:
   web-portal:
+  pihole-updatelists:
 services:
   # httpd
   # https://hub.docker.com/r/pihole/pihole
@@ -21,6 +22,7 @@ services:
     volumes:
       - "pihole_config:/etc/pihole"
       - "dnsmasq_config:/etc/dnsmasq.d"
+      - 'pihole-updatelists:/etc/pihole-updatelists/'
     dns:
       - "127.0.0.1"
       - "1.1.1.1"
