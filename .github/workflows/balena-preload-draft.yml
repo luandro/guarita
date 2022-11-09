@@ -1,5 +1,8 @@
 name: Build Balena Disk Images
-on: workflow_dispatch
+on:
+  push:
+    branches-ignore:
+      - main
 jobs:
   balena-build-images:
     strategy:
