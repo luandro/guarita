@@ -37,7 +37,7 @@ jobs:
           balena_cli_commands: |
             preload \
               "$BALENA_IMAGE.img" \
-              --fleet ${{secrets.BALENA_FLEET}}-${{ matrix.board }} \
+              --fleet ${{secrets.BALENA_FLEET}} \
               --commit latest
           balena_cli_version: 13.7.1
 
@@ -49,7 +49,7 @@ jobs:
             os configure \
               "$BALENA_IMAGE.img" \
               --config-network=ethernet  \
-              --fleet ${{secrets.BALENA_FLEET}}-${{ matrix.board }}
+              --fleet ${{secrets.BALENA_FLEET}}
           balena_cli_version: 13.7.1
 
       - name: Zip image
