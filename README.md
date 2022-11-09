@@ -1,4 +1,6 @@
-# balena-pihole
+# Guarita
+
+[![Balena Push Release](https://github.com/luandro/guarita/actions/workflows/balena-push-release.yml/badge.svg)](https://github.com/luandro/guarita/actions/workflows/balena-push-release.yml)
 
 If you're looking for a way to quickly and easily get up and running with a [Pi-hole](https://pi-hole.net/) device for your home network, this is the project for you.
 
