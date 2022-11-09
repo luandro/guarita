@@ -2,7 +2,9 @@
 FROM pihole/pihole:2022.10
 
 # https://github.com/jacklul/pihole-updatelists#install-with-docker
-RUN apt-get update && apt-get install -Vy wget php-cli php-sqlite3 php-intl php-curl
+RUN apt-get update && \
+	apt-get install --no-install-recommends -y wget php-cli php-sqlite3 php-intl php-curl \
+	apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN wget -O - https://raw.githubusercontent.com/jacklul/pihole-updatelists/master/install.sh | bash /dev/stdin docker
 
 WORKDIR /usr/src/app
@@ -11,6 +13,7 @@ ENV LOCAL_DOMAIN nhandeflix.com
 ENV LOCAL_IP 192.168.1.13
 
 COPY cont-init.d/ /etc/cont-init.d/
+RUN chmod +x /etc/cont-init.d/10-custom.sh
 
 ENV DEBIAN_FRONTEND noninteractive
 
