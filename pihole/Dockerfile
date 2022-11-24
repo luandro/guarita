@@ -11,7 +11,7 @@ WORKDIR /usr/src/app
 
 COPY cont-init.d/ /etc/cont-init.d/
 
-RUN chmod +x /etc/cont-init.d/10-custom.sh &&
+RUN chmod +x /etc/cont-init.d/10-custom.sh
 ENV DEBIAN_FRONTEND noninteractive
 
 # hadolint ignore=DL3008
