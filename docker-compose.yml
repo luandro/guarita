@@ -12,25 +12,29 @@ volumes:
   web-portal:
   pihole-updatelists:
 services:
-  # httpd
   # https://hub.docker.com/r/pihole/pihole
   pihole:
     build: pihole
-    network_mode: host
     cap_add:
+      - SYS_TTY_CONFIG
       - NET_ADMIN
     volumes:
       - "pihole_config:/etc/pihole"
       - "dnsmasq_config:/etc/dnsmasq.d"
-      - 'pihole-updatelists:/etc/pihole-updatelists/'
     dns:
       - "127.0.0.1"
       - "1.1.1.1"
-  # https://github.com/klutchell/unbound-dnscrypt
+    network_mode: host
+    labels:
+      io.balena.features.dbus: "1"
+    devices:
+      - /dev/tty0
+      - /dev/tty1
+    tmpfs:
+      - /var/log/pihole
+
   unbound:
-    build:
-      context: unbound
-    privileged: true
+    build: unbound
     ports:
       - "5053:5053/tcp"
       - "5053:5053/udp"
