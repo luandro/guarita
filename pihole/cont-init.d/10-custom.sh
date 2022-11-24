@@ -6,10 +6,6 @@ set -e
 # SET PIHOLE ADMIN WEB PASSWORD
 echo "=======" "Setando senha do Pihole" "====="
 pihole -a -p "${WEBPASSWORD}" || true
-# TEMPORÁRIO: remover nos próximos releases
-echo "=======" "desabilitando DHCP" "====="
-# pihole --regex -d '.*' # isso era preciso para limpar regex antigos
-pihole -a disabledhcp
 
 # SET DOMAIN FOR LOCAL SERVICES
 echo "=======" "Adiciona domínio local ao dnsmasq" "====="
