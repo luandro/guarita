@@ -61,9 +61,6 @@ services:
     dns:
       - "127.0.0.1"
       - "1.1.1.1"
-    environment:
-      - DNS1: 127.0.0.1#5053
-      - DNS2: 127.0.0.1#5053
     # https://github.com/balenablocks/hostname
   hostname:
     image: balenablocks/hostname:latest

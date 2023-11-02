@@ -10,6 +10,8 @@ pihole -a -p "${WEBPASSWORD}" || true
 echo "=======" "desabilitando DHCP" "====="
 # pihole --regex -d '.*' # isso era preciso para limpar regex antigos
 pihole -a disabledhcp
+pihole -a setdns '127.0.0.1#5053'
+pihole -a setdns '127.0.0.1#5053'
 
 # SET DOMAIN FOR LOCAL SERVICES
 echo "=======" "Adiciona domínio local ao dnsmasq" "====="
