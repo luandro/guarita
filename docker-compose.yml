@@ -1,4 +1,5 @@
 version: '2.1'
+
 services:
   pihole:
     build: pihole
@@ -22,6 +23,7 @@ services:
     image: adguard/adguardhome:latest
     volumes:
       - adguard_conf:/opt/adguardhome/conf
+      - adguard_work:/opt/adguardhome/work
     privileged: true
     labels:
       io.balena.features.supervisor-api: 1
@@ -34,7 +36,7 @@ services:
     image: linuxserver/wireguard:latest
     volumes:
       - wireguard_config:/config
-      # - '/lib/modules:/lib/modules'
+      - wireguard_lib:/lib/modules
     privileged: true
     labels:
       io.balena.features.supervisor-api: 1
@@ -54,6 +56,7 @@ services:
     image: keexybox/keexybox:latest
     volumes:
       - keexybox_config:/config
+      - keexybox_data:/data
     privileged: true
     labels:
       io.balena.features.supervisor-api: 1
@@ -111,3 +114,17 @@ services:
     environment:
       - NTP_SERVERS=time.cloudflare.com
       - LOG_LEVEL=0
+volumes:
+  pihole_etc:
+  pihole_dnsmasq:
+  adguard_conf:
+  adguard_work:
+  wireguard_config:
+  wireguard_lib:
+  keexybox_config:
+  keexybox_data:
+  jellyfin-config:
+  jellyfin-cache:
+  media:
+  jellyfin-lib:
+  sync-config:
