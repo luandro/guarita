@@ -18,6 +18,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ENV INTERFACE eth0
 ENV DNSMASQ_LISTENING single
+ENV PIHOLE_UID 0
 ENV PIHOLE_DNS_ 1.1.1.1;1.0.0.1
 ENV WEBPASSWORD jekupe
 ENV TZ 'America/Sao_Paulo'
