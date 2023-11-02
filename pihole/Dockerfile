@@ -1,22 +1,22 @@
 # https://hub.docker.com/r/pihole/pihole/tags
 FROM pihole/pihole
-# WORKDIR /usr/src/app
+WORKDIR /usr/src/app
 
 # https://github.com/jacklul/pihole-updatelists#install-with-docker
-# RUN apt-get update && apt-get install -Vy wget php-cli php-sqlite3 php-intl php-curl
-# # RUN wget -O - https://raw.githubusercontent.com/jacklul/pihole-updatelists/master/install.sh | bash /dev/stdin docker
+RUN apt-get update && apt-get install -Vy wget php-cli php-sqlite3 php-intl php-curl
+RUN wget -O - https://raw.githubusercontent.com/jacklul/pihole-updatelists/master/install.sh | bash /dev/stdin docker
 
 # ENV LOCAL_DOMAIN wai.com
-# # ENV LOCAL_IP 192.168.1.13
+# ENV LOCAL_IP 192.168.1.13
 
-# COPY cont-init.d/ /etc/cont-init.d/
-# RUN chmod +x /etc/cont-init.d/10-custom.sh
+COPY cont-init.d/ /etc/cont-init.d/
+RUN chmod +x /etc/cont-init.d/10-custom.sh
 
-# ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND noninteractive
 
-# SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# # ENV INTERFACE eth0
+# ENV INTERFACE eth0
 ENV DNSMASQ_LISTENING single
 ENV PIHOLE_UID 0
 ENV DNSMASQ_USER root
