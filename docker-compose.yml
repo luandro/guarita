@@ -11,8 +11,41 @@ volumes:
   sync-downloads:
   web-portal:
   pihole-updatelists:
+  unbound:
+  wireguard:
 services:
-  # httpd
+  unbound:
+    image: "mvance/unbound:latest"
+    restart: unless-stopped
+    hostname: "unbound"
+    volumes:
+      - unbound:/opt/unbound/etc/unbound/"
+    cap_add:
+      - NET_ADMIN
+  # https://github.com/wg-easy/wg-easy
+  wg-easy:
+    image: weejewel/wg-easy
+    environment:
+      - WG_HOST=192.168.0.1
+      - PASSWORD=admin
+    volumes:
+      - wireguard:/etc/wireguard
+    ports:
+      - "51820:51820/udp"
+      - "51821:51821/tcp"
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+      - net.ipv4.ip_forward=1
+    restart: unless-stopped
+    labels:
+      io.balena.features.kernel-modules: "1"
+    # networks:
+    #   private_network:
+    #     ipv4_address: 10.2.0.3
+
   # https://hub.docker.com/r/pihole/pihole
   pihole:
     build: pihole
@@ -26,22 +59,14 @@ services:
     dns:
       - "127.0.0.1"
       - "1.1.1.1"
-  # https://github.com/klutchell/unbound-dnscrypt
-  unbound:
-    build:
-      context: unbound
-    privileged: true
-    ports:
-      - "5053:5053/tcp"
-      - "5053:5053/udp"
-  # https://github.com/balenablocks/hostname
+    # https://github.com/balenablocks/hostname
   hostname:
     image: balenablocks/hostname:latest
-    restart: 'no'
+    restart: "no"
     labels:
       io.balena.features.supervisor-api: 1
     environment:
-      SET_HOSTNAME: guarani
+      SET_HOSTNAME: waiapi
   jellyfin:
     image: jellyfin/jellyfin
     restart: unless-stopped
@@ -51,13 +76,13 @@ services:
       - 7359:7359/udp #optional
       - 1900:1900/udp #optional
     volumes:
-      - 'jellyfin-config:/config'
-      - 'jellyfin-cache:/cache'
-      - 'media:/media'
-      - 'jellyfin-lib:/opt/vc/lib'
+      - "jellyfin-config:/config"
+      - "jellyfin-cache:/cache"
+      - "media:/media"
+      - "jellyfin-lib:/opt/vc/lib"
     environment:
-      PUID: '1000'
-      PGID: '1000'
+      PUID: "1000"
+      PGID: "1000"
   sync:
     build: sync
     environment:
@@ -65,8 +90,8 @@ services:
       PGID: 1000
       TZ: America/Brasil
     volumes:
-      - 'sync-config:/config'
-      - 'media:/data'
+      - "sync-config:/config"
+      - "media:/data"
     ports:
       - 82:8384
       - 22000:22000/tcp
@@ -86,3 +111,4 @@ services:
     environment:
       - NTP_SERVERS=time.cloudflare.com
       - LOG_LEVEL=0
+

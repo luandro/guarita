@@ -13,7 +13,7 @@ pihole -a disabledhcp
 
 # SET DOMAIN FOR LOCAL SERVICES
 echo "=======" "Adiciona domínio local ao dnsmasq" "====="
-DOMAIN="${LOCAL_DOMAIN:=nhandeflix.com}"
+DOMAIN="${LOCAL_DOMAIN:=wai.com}"
 IP="${LOCAL_IP:=192.168.1.13}"
 
 echo "address=/$DOMAIN/$IP" > /etc/dnsmasq.d/03-custom-dns.conf
