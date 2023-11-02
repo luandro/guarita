@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -Vy wget php-cli php-sqlite3 php-intl php-
 # RUN wget -O - https://raw.githubusercontent.com/jacklul/pihole-updatelists/master/install.sh | bash /dev/stdin docker
 
 ENV LOCAL_DOMAIN wai.com
-ENV LOCAL_IP 192.168.1.13
+# ENV LOCAL_IP 192.168.1.13
 
 COPY cont-init.d/ /etc/cont-init.d/
 RUN chmod +x /etc/cont-init.d/10-custom.sh
@@ -16,9 +16,10 @@ ENV DEBIAN_FRONTEND noninteractive
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-ENV INTERFACE eth0
+# ENV INTERFACE eth0
 ENV DNSMASQ_LISTENING single
 ENV PIHOLE_UID 0
+ENV DNSMASQ_USER root
 ENV PIHOLE_DNS_ 1.1.1.1;1.0.0.1
 ENV WEBPASSWORD jekupe
 ENV TZ 'America/Sao_Paulo'
