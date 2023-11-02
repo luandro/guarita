@@ -17,11 +17,12 @@ services:
   unbound:
     image: "mvance/unbound:latest"
     restart: unless-stopped
-    hostname: "unbound"
     volumes:
       - unbound:/opt/unbound/etc/unbound/"
     cap_add:
       - NET_ADMIN
+    ports:
+      - "5053:5053/udp"
   # https://github.com/wg-easy/wg-easy
   wg-easy:
     image: weejewel/wg-easy
@@ -40,6 +41,7 @@ services:
       - net.ipv4.conf.all.src_valid_mark=1
       - net.ipv4.ip_forward=1
     restart: unless-stopped
+    privileged: true
     labels:
       io.balena.features.kernel-modules: "1"
     # networks:
@@ -59,6 +61,9 @@ services:
     dns:
       - "127.0.0.1"
       - "1.1.1.1"
+    environment:
+      - DNS1: 127.0.0.1#5053
+      - DNS2: 127.0.0.1#5053
     # https://github.com/balenablocks/hostname
   hostname:
     image: balenablocks/hostname:latest
