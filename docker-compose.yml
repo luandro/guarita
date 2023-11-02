@@ -30,7 +30,7 @@ services:
     ports:
       - '53:53/tcp'
       - '53:53/udp'
-      - '85:80/tcp'
+      - '84:80/tcp'
       - '443:443/tcp'
   wireguard:
     image: linuxserver/wireguard:latest
@@ -52,17 +52,6 @@ services:
       - PEERDNS=auto
       - INTERNAL_SUBNET=10.13.13.0
     restart: unless-stopped
-  keexybox:
-    image: keexybox/keexybox:latest
-    volumes:
-      - keexybox_config:/config
-      - keexybox_data:/data
-    privileged: true
-    labels:
-      io.balena.features.supervisor-api: 1
-    ports:
-      - '86:80'
-      - '3128:3128'
   hostname:
     image: balenablocks/hostname:latest
     restart: "no"
@@ -121,8 +110,6 @@ volumes:
   adguard_work:
   wireguard_config:
   wireguard_lib:
-  keexybox_config:
-  keexybox_data:
   jellyfin-config:
   jellyfin-cache:
   media:
