@@ -3,7 +3,7 @@ FROM pihole/pihole
 WORKDIR /usr/src/app
 
 # https://github.com/jacklul/pihole-updatelists#install-with-docker
-RUN apt-get update && apt-get install -Vy wget php-cli php-sqlite3 php-intl php-curl
+RUN apt-get update && apt-get install -Vy wget jq php-cli php-sqlite3 php-intl php-curl
 RUN wget -O - https://raw.githubusercontent.com/jacklul/pihole-updatelists/master/install.sh | bash /dev/stdin docker
 
 # ENV LOCAL_DOMAIN wai.com

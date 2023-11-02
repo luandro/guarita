@@ -4,17 +4,16 @@
 set -e
 
 # SET PIHOLE ADMIN WEB PASSWORD
-echo "=======" "Setando senha do Pihole" "====="
-pihole -a -p "${WEBPASSWORD}" || true
-# TEMPORÁRIO: remover nos próximos releases
-echo "=======" "desabilitando DHCP" "====="
-# pihole --regex -d '.*' # isso era preciso para limpar regex antigos
-pihole -a disabledhcp
-pihole -a setdns '127.0.0.1#5053'
-pihole -a setdns '127.0.0.1#5053'
+echo "=======" "Setting Pihole password" "====="
+pihole -a -p "${WEBPASSWORD}" || { echo "Failed to set Pihole password"; exit 1; }
+
+# TEMPORARY: remove in the next releases
+echo "=======" "Disabling DHCP" "====="
+pihole -a disabledhcp || { echo "Failed to disable DHCP"; exit 1; }
+pihole -a setdns '127.0.0.1#5053' || { echo "Failed to set DNS"; exit 1; }
 
 # SET DOMAIN FOR LOCAL SERVICES
-echo "=======" "Adiciona domínio local ao dnsmasq" "====="
+echo "=======" "Adding local domain to dnsmasq" "====="
 DOMAIN="${LOCAL_DOMAIN:=wai.com}"
 IP="${LOCAL_IP:=192.168.1.13}"
 
@@ -27,14 +26,10 @@ do
    sleep 5
 done
 
-# https://serverfault.com/a/817791
 # force dnsmasq to bind only the interfaces it is listening on
-# otherwise dnsmasq will fail to start since balena is using 53 on some interfaces
 echo "bind-interfaces" > /etc/dnsmasq.d/balena.conf
 
-# TODO: Fetch ip address from Balena supervisor and generate custom dns:
-# Python example:
-# WGET = subprocess.Popen (['wget', '-qO-', os.environ["BALENA_SUPERVISOR_ADDRESS"]+"/v1/device?apikey="+os.environ["BALENA_SUPERVISOR_API_KEY"]],  stdout=subprocess.PIPE)
-# output = subprocess.check_output ([ "jq", "-r", ".ip_address" ], stdin=WGET.stdout).split()
-# WGET.wait()
-# IP_ADDRESS = output[1]
+# Fetch Balena host IP
+# BALENA_HOST_IP=$(curl -s -H "Authorization: Bearer ${BALENA_SUPERVISOR_API_KEY}" "${BALENA_SUPERVISOR_ADDRESS}/v1/device?apikey=${BALENA_SUPERVISOR_API_KEY}" | jq -r ".ip_address")
+
+# TODO: Use Balena host IP to generate custom DNS
