@@ -18,11 +18,13 @@ jobs:
           key-path: '["version"]' # Access the runs key then the using key and retuns the value.
 
       - name: Balena Deploy
-        uses: Theia-Scientific/balena-cli@v1
+        uses: balena-labs-research/community-cli-action@1.0.0
         if: success()
         with:
-          balena_api_token: ${{secrets.BALENA_TOKEN}}
-          balena_command: "push ${{secrets.BALENA_FLEET}} --release-tag v${{steps.yaml-data.outputs.data}} release"
+          balena_cli_version: 17.2.2
+          balena_token: ${{secrets.BALENA_TOKEN}}
+          balena_cli_commands: |
+            "push ${{secrets.BALENA_FLEET}} --release-tag v${{steps.yaml-data.outputs.data}} release"
   
   balena-build-images:
     strategy:
@@ -48,7 +50,7 @@ jobs:
             os download "$BALENA_IMAGE" \
               --output "$BALENA_IMAGE.img" \
               --version default
-          balena_cli_version: 13.7.1
+          balena_cli_version: 17.2.2
 
       - name: balena CLI Action - preload
         uses: balena-labs-research/community-cli-action@1.0.0
@@ -60,7 +62,7 @@ jobs:
               --fleet ${{secrets.BALENA_FLEET}} \
               --dont-check-arch  \
               --commit latest
-          balena_cli_version: 13.7.1
+          balena_cli_version: 17.2.2
 
       - name: balena CLI Action - configure
         uses: balena-labs-research/community-cli-action@1.0.0
@@ -71,7 +73,7 @@ jobs:
               "$BALENA_IMAGE.img" \
               --config-network=ethernet  \
               --fleet ${{secrets.BALENA_FLEET}}
-          balena_cli_version: 13.7.1
+          balena_cli_version: 17.2.2
 
       - name: Get the Ref
         id: get-ref

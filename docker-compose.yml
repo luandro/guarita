@@ -1,47 +1,48 @@
-version: "2.1"
+version: '2.1'
 
-volumes:
-  pihole_config:
-  dnsmasq_config:
-  jellyfin-config:
-  jellyfin-cache:
-  media:
-  jellyfin-lib:
-  sync-config:
-  sync-downloads:
-  web-portal:
-  pihole-updatelists:
 services:
-  # httpd
-  # https://hub.docker.com/r/pihole/pihole
-  pihole:
-    build: pihole
+  adguard:
+    build: adguard
     network_mode: host
+    privileged: true
+    volumes:
+      - 'adguard_work:/opt/adguardhome/work:rw'
+      - 'adguard_conf:/opt/adguardhome/conf:rw'
+    command:
+      - "--no-check-update"
+      - "--web-addr"
+      - "0.0.0.0:84"
+      - "--config"
+      - "/opt/adguardhome/conf/AdGuardHome.yaml"
+  # https://github.com/wg-easy/wg-easy
+  wg-easy:
+    image: weejewel/wg-easy
+    environment:
+      - WG_HOST=192.168.0.1
+      - PASSWORD=admin
+    volumes:
+      - wireguard:/etc/wireguard
+    ports:
+      - "51820:51820/udp"
+      - "83:51821/tcp"
     cap_add:
       - NET_ADMIN
-    volumes:
-      - "pihole_config:/etc/pihole"
-      - "dnsmasq_config:/etc/dnsmasq.d"
-      - 'pihole-updatelists:/etc/pihole-updatelists/'
-    dns:
-      - "127.0.0.1"
-      - "1.1.1.1"
-  # https://github.com/klutchell/unbound-dnscrypt
-  unbound:
-    build:
-      context: unbound
+      - SYS_MODULE
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+      - net.ipv4.ip_forward=1
+    restart: unless-stopped
     privileged: true
-    ports:
-      - "5053:5053/tcp"
-      - "5053:5053/udp"
-  # https://github.com/balenablocks/hostname
+    labels:
+      io.balena.features.kernel-modules: "1"
+      io.balena.features.dbus: "1"
   hostname:
     image: balenablocks/hostname:latest
-    restart: 'no'
+    restart: "no"
     labels:
       io.balena.features.supervisor-api: 1
     environment:
-      SET_HOSTNAME: guarani
+      SET_HOSTNAME: waiapi
   jellyfin:
     image: jellyfin/jellyfin
     restart: unless-stopped
@@ -51,13 +52,13 @@ services:
       - 7359:7359/udp #optional
       - 1900:1900/udp #optional
     volumes:
-      - 'jellyfin-config:/config'
-      - 'jellyfin-cache:/cache'
-      - 'media:/media'
-      - 'jellyfin-lib:/opt/vc/lib'
+      - "jellyfin-config:/config"
+      - "jellyfin-cache:/cache"
+      - "media:/media"
+      - "jellyfin-lib:/opt/vc/lib"
     environment:
-      PUID: '1000'
-      PGID: '1000'
+      PUID: "1000"
+      PGID: "1000"
   sync:
     build: sync
     environment:
@@ -65,8 +66,8 @@ services:
       PGID: 1000
       TZ: America/Brasil
     volumes:
-      - 'sync-config:/config'
-      - 'media:/data'
+      - "sync-config:/config"
+      - "media:/data"
     ports:
       - 82:8384
       - 22000:22000/tcp
@@ -86,3 +87,12 @@ services:
     environment:
       - NTP_SERVERS=time.cloudflare.com
       - LOG_LEVEL=0
+volumes:
+  adguard_conf:
+  adguard_work:
+  wireguard:
+  jellyfin-config:
+  jellyfin-cache:
+  media:
+  jellyfin-lib:
+  sync-config:

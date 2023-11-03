@@ -1,7 +1,7 @@
-name: "Pety"
+name: "Guarita"
 type: "sw.application"
-version: 3.0.1
-description: "Peti uses Pi-Hole to schedule Internet blocks, sync folders accross devices and show media using Jellyfin"
+version: 4.0.1
+description: "Guarita uses Pi-Hole to schedule Internet blocks, sync folders accross devices and show media using Jellyfin"
 post-provisioning: >-
   ## Usage instructions
   
