@@ -1,27 +1,13 @@
 name: "Guarita"
 type: "sw.application"
-version: 4.0.1
-description: "Guarita uses Pi-Hole to schedule Internet blocks, sync folders accross devices and show media using Jellyfin"
+version: 4.0.2
+description: "Guarita is designed to enhance the Internet experience. It offers ad blocking, privacy protection, and parental control. It also allows syncing content from a curated repository and streaming it through an intuitive interface."
 post-provisioning: >-
   ## Usage instructions
-  
-  Once your device joins the fleet you'll need to allow some time for it to download the application and download blocklists.
-  
-  When it's done you should be able to access the access the app at http://pihole.local with a default password of `balena`.
-
-  On your router or DHCP server assign a static IP to your Pi-hole device, and set your clients DNS to the same IP address.
-  
-  Documentation for Pi-hole can be found at https://docs.pi-hole.net/
-
-  Set the BLOCK and UNBLOCK variables to control web blocking schedule.
-
-  Configure the Nginx Proxy Manager with user "admin@example.com" and password "changeme".
-
-  Configure Jellyfin following the docs: https://jellyfin.org/docs/general/quick-start.html
-
-  Login to Filebrowser using user "admin" and password ""admin"
-
-  Configure Resilio Sync following the docs: https://www.resilio.com/tech/sync-tutorials-and-howto/
+  - Jellyfin: The media server comes pre-configured. Simply start the server and begin streaming content.
+  - AdGuard: The ad blocking software is also pre-configured. It will start blocking ads as soon as it's up and running.
+  - WireGuard: To use the VPN, you need to connect a client device. Follow the instructions provided in the WireGuard documentation.
+  - NTP: The Network Time Protocol is straightforward to use. Simply point your device to the NTP server and it will sync the time.
 assets:
   repository:
     type: "blob.asset"
