@@ -101,8 +101,7 @@ volumes:
   # pihole_dnsmasq:
   adguard_conf:
   adguard_work:
-  wireguard_config:
-  wireguard_lib:
+  wireguard:
   jellyfin-config:
   jellyfin-cache:
   media:
