@@ -1,25 +1,20 @@
 # Guarita
-
 [![Balena Push Release](https://github.com/luandro/guarita/actions/workflows/balena-push-release.yml/badge.svg)](https://github.com/luandro/guarita/actions/workflows/balena-push-release.yml)
 
-If you're looking for a way to quickly and easily get up and running with a [Pi-hole](https://pi-hole.net/) device for your home network, this is the project for you.
+Guarita is designed to enhance the Internet experience. It offers ad blocking, privacy protection, and parental control. It also allows syncing content from a curated repository and streaming it through an intuitive interface. It is optimized for deployment on a Raspberry Pi device and can be managed remotely via balenaCloud.
+
+Guarita also includes an NTP server for use with your router, ensuring your network's clock is always up to date. This is particularly useful for implementing router-level internet blocks.
+
+## Features
 
 This project is a [balenaCloud](https://www.balena.io/cloud) stack with the following services:
 
-- [Pi-hole](https://pi-hole.net/)
-- [PADD](https://github.com/pi-hole/PADD)
-- [Unbound](https://unbound.net)
-
-balenaCloud is a free service to remotely manage and update your Raspberry Pi through an online dashboard interface, as well as providing remote access to the Pi-hole web interface without any additional configuration.
-
-## Hardware required
-
-- Raspberry Pi 2/3/4 (Note: this project will not work with the Pi Zero), balenaFin, or NanoPi Neo Air
-- 16GB Micro-SD Card (we recommend Sandisk Extreme Pro SD cards)
-- Display (any Raspberry Pi display will work for this project)
-- Micro-USB cable
-- Power supply
-- Case (optional)
+- AdGuard: A network-wide ad blocking service. [More Info](https://adguard.com/)
+- Wireguard: A simple WireGuard VPN server GUI. [More Info](https://www.wireguard.com/)
+- Jellyfin: A free software media system that lets you control your media from a web interface. [More Info](https://jellyfin.org/)
+- Syncthing: A service to sync folders across devices. [More info](https://syncthing.net/)
+- NTP: A Network Time Protocol server.
+- Hostname: A service to set a custom hostname on application start.
 
 ## Getting Started
 
@@ -27,22 +22,46 @@ You can one-click-deploy this project to balena using the button below:
 
 [![deploy button](https://balena.io/deploy.svg)](https://dashboard.balena-cloud.com/deploy?repoUrl=https://github.com/luandro/guarita&defaultDeviceType=raspberrypi3)
 
-## Manual Deployment
 
-Alternatively, deployment can be carried out by manually creating a [balenaCloud account](https://dashboard.balena-cloud.com) and application, flashing a device, downloading the project and pushing it via the [balena CLI](https://github.com/balena-io/balena-cli).
+## Hardware required
 
-### Device Variables
+- Raspberry Pi 3 or 4
+- 16GB Micro-SD Card (we recommend Sandisk Extreme Pro SD cards)
+- Micro-USB cable
+- Power supply
+- Case and cooling (optional but recommended)
+- Ethernet cable
+
+## Environment Variables
 
 Device Variables apply to all services within the application, and can be applied fleet-wide to apply to multiple devices. If you used the one-click-deploy method, the default environment variables will already be added for you to customize as needed.
 
-| Name           | Example            | Purpose                                                                                                                                                                                                                       |
-| -------------- | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `TZ`           | `America/Toronto`  | Inform services of the timezone in your location, in order to set times and dates within the applications correctly. Find a [list of all timezone values here](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). |
-| `INTERFACE`    | `eth0`             | Provide the name of your device's primary network interface, usually `eth0` for wired or `wlan0` for wireless. This is required to avoid conflicts with balena DNS on internal interfaces.                                    |
-| `WEBPASSWORD`  | `mysecretpassword` | Password for accessing the web-based interface of Pi-hole - you won’t be able to access the admin panel without defining a password here.                                                                                     |
-| `PIHOLE_DNS_`  | `1.1.1.1;1.0.0.1`  | Tell Pi-hole where to forward DNS requests that aren’t blocked. We’re using Cloudflare by default but you can specify your own using IPs delimited by semi-colons.                                                            |
-| `ServerIP`     | `x.x.x.x`          | Set to your device's primary network IPv4 address, used by web block modes and lighttpd bind.                                                                                                                                 |
-| `SET_HOSTNAME` | `pihole`           | Set a custom hostname on application start.                                                                                                                                                                                   |
+| Service | Variable | Example | Description |
+| ------- | -------- | ------- | ----------- |
+| AdGuard | - | - | - |
+| Wireguard | WG_HOST | 192.168.0.1 | The host IP for the WireGuard VPN server |
+| Wireguard | PASSWORD | admin | The password for the WireGuard VPN server |
+| Hostname | SET_HOSTNAME | waiapi | Set a custom hostname on application start |
+| Jellyfin | PUID | 1000 | User ID |
+| Jellyfin | PGID | 1000 | Group ID |
+| Sync | PUID | 1000 | User ID |
+| Sync | PGID | 1000 | Group ID |
+| Sync | TZ | America/Brasil | Timezone |
+| NTP | NTP_SERVERS | time.cloudflare.com | NTP server to use |
+| NTP | LOG_LEVEL | 0 | Log level for the NTP server |
+
+## IP Addresses
+
+| Service | IP Address |
+| ------- | ---------- |
+| Jellyfin | 80 |
+| Sync | 82 |
+| Wireguard | 83 |
+| AdGuard | 84 |
+| NTP | 123 |
+
+Please note that these IP addresses are the default ones and can be changed according to your network configuration.
+
 ## Remote Support
 
 In order to ssh into the devices you'll need to be part of the org that created the fleet and have your public ssh key added to the [Balena Dashboard](https://www.balena.io/docs/learn/manage/ssh-access/#add-an-ssh-key-to-balenacloud). Balena devices use port `22222` for ssh. The easiest way to work with Balena remotely is by installing the [Balena CLI](https://www.balena.io/docs/reference/balena-cli/).And be sure to check documentation for more information on [ssh access](https://www.balena.io/docs/learn/manage/ssh-access/).
@@ -70,71 +89,6 @@ chromium --proxy-server="socks5://localhost:9090"
 ```
 
 The browser window that opens up will be tunneling the device, so if a router's ip is `192.168.1.1` opening that in the browser will open the router's dashboard if it's running on router's port 80.
-
-
-## Usage
-
-### Pi-hole
-
-Check out our blog post on how to deploy network-wide ad-blocking with Pi-hole:
-
-<https://www.balena.io/blog/deploy-network-wide-ad-blocking-with-pi-hole-and-a-raspberry-pi/>
-
-Once your device joins the fleet you'll need to allow some time for it to download the application and download blocklists.
-
-When it's done you should be able to access the access the app at <http://pihole.local> with a default password of `balena`.
-
-On your router or DHCP server assign a static IP to your Pi-hole device, and set your clients DNS to the same IP address.
-
-Documentation for Pi-hole can be found at <https://docs.pi-hole.net/>
-
-### PADD
-
-Note that balena-pihole uses the [fbcp block](https://github.com/balenablocks/fbcp).
-
-The PiTFT LCD screens [from Adafruit (and others)](https://www.adafruit.com/?q=pitft) are supported.
-
-In order to use these displays you're required to add additional configuration by setting
-the `FBCP_DISPLAY` variable within the dashboard. This variable should be set to one of the values below:
-
-- `adafruit-hx8357d-pitft`
-- `adafruit-ili9341-pitft`
-- `freeplaytech-waveshare32b`
-- `waveshare35b-ili9486`
-- `tontec-mz61581`
-- `waveshare-st7789vw-hat`
-- `waveshare-st7735s-hat`
-- `kedei-v63-mpi3501`
-- `dtoverlay` (requires `BALENA_HOST_CONFIG_dtoverlay` to be set)
-
-#### Configuring HDMI and TFT display sizes
-
-The following [Device Configuration](https://www.balena.io/docs/learn/manage/configuration/#configuration-variables)
-variables might be required for proper scaling and resolutions:
-
-| Name                                  | Value              |
-| ------------------------------------- | ------------------ |
-| BALENA_HOST_CONFIG_hdmi_cvt           | 480 320 60 1 0 0 0 |
-| BALENA_HOST_CONFIG_hdmi_force_hotplug | 1                  |
-| BALENA_HOST_CONFIG_hdmi_group         | 2                  |
-| BALENA_HOST_CONFIG_hdmi_mode          | 87                 |
-| BALENA_HOST_CONFIG_rotate_screen      | 1                  |
-
-### Unbound
-
-This project includes an Unbound service providing recursive DNS, but it is not used by default.
-
-Read more about the reasons for using a recursive DNS with Pi-hole here:
-
-<https://docs.pi-hole.net/guides/unbound/>
-
-Set the following environment variable in your balenaCloud Dashboard to tell Pi-hole to forward DNS requests that aren’t blocked to the local Unbound DNS resolver service.
-
-- `PIHOLE_DNS_`: `127.0.0.1#5053;127.0.0.1#5053`
-
-**Note:** For security and footprint reasons, the Unbound container does not allow shell or terminal access via SSH or the balenaCloud console.
-
-Advanced users can change the Unbound configuration by editing [`unbound.conf`](./unbound/unbound.conf) or [`a-records.conf`](./unbound/a-records.conf) before pushing the app to balenaCloud.
 
 ## Help
 

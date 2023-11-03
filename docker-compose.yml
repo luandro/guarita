@@ -36,14 +36,6 @@ services:
     labels:
       io.balena.features.kernel-modules: "1"
       io.balena.features.dbus: "1"
-  squid:
-    image: ubuntu/squid:latest
-    environment:
-      - TZ=UTC
-    ports:
-      - '3128:3128'
-    volumes:
-      - squid-conf:/etc/squid/squid.conf
   hostname:
     image: balenablocks/hostname:latest
     restart: "no"
@@ -104,4 +96,3 @@ volumes:
   media:
   jellyfin-lib:
   sync-config:
-  squid-conf:

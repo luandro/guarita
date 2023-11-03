@@ -17,7 +17,7 @@ inputs:
     description: "A tag to be used instead of the Github tag"
   balena_release_type:
     description: "Is this a release a draft"
-    default: "draft"
+    default: "release"
   balena_path:
     description: "Path to read balena.yml file from"
     default: "./balena.yml"
