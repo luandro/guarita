@@ -22,21 +22,23 @@ jobs:
           commit: ${{ github.sha }}
 
   balena-build-images:
-    strategy:
-      matrix:
-        board: ['pi3', 'pi4']
+    # strategy:
+    #   matrix:
+    #     board: ['pi3', 'pi4']
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
       - name: Get base board
+        # run: |
+        #   if [ "${{ matrix.board }}" == 'pi3' ]; then
+        #     echo "BALENA_IMAGE=raspberrypi3" >> $GITHUB_ENV
+        #   elif [ "${{ matrix.board }}" == 'pi4' ]; then
+        #     echo "BALENA_IMAGE=raspberrypi4-64" >> $GITHUB_ENV
+        #   fi
         run: |
-          if [ "${{ matrix.board }}" == 'pi3' ]; then
-            echo "BALENA_IMAGE=raspberrypi3" >> $GITHUB_ENV
-          elif [ "${{ matrix.board }}" == 'pi4' ]; then
-            echo "BALENA_IMAGE=raspberrypi4-64" >> $GITHUB_ENV
-          fi
+          echo "BALENA_IMAGE=raspberrypi4-64" >> $GITHUB_ENV
       - name: balena CLI Action - download
         uses: balena-labs-research/community-cli-action@1.0.0
         with:
