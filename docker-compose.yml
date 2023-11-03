@@ -92,8 +92,8 @@ services:
     volumes:
       - unbound:/opt/unbound/etc/unbound
     ports:
-      - '5353:53/tcp'
-      - '5353:53/udp'
+      - '5355:53/tcp'
+      - '5355:53/udp'
   squid:
     image: ubuntu/squid:latest
     environment:
