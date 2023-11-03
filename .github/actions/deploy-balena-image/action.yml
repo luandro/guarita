@@ -58,6 +58,7 @@ runs:
 
     - name: Balena Deploy Release
       uses: balena-labs-research/community-cli-action@1.0.0
+      if: ${{(inputs.balena_release_type != 'draft') && (success())}}
       with:
         balena_cli_version: 17.2.2
         balena_token: ${{inputs.BALENA_TOKEN}}
