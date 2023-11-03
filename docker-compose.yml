@@ -96,9 +96,14 @@ services:
     environment:
       - NTP_SERVERS=time.cloudflare.com
       - LOG_LEVEL=0
+  unbound:
+    image: mvance/unbound:latest
+    volumes:
+      - unbound:/opt/unbound/etc/unbound
+    ports:
+      - '5353:53/tcp'
+      - '5353:53/udp'
 volumes:
-  # pihole_etc:
-  # pihole_dnsmasq:
   adguard_conf:
   adguard_work:
   wireguard:
@@ -107,3 +112,4 @@ volumes:
   media:
   jellyfin-lib:
   sync-config:
+  unbound:
