@@ -1,24 +1,24 @@
 version: '2.1'
 
 services:
-  pihole:
-    build: pihole
-    volumes:
-      - pihole_etc:/etc/pihole
-      - pihole_dnsmasq:/etc/dnsmasq.d
-    cap_add:
-      - NET_ADMIN
-    restart: unless-stopped
-    environment:
-      LOCAL_IP: '10.75.0.113'
-    privileged: true
-    labels:
-      io.balena.features.supervisor-api: 1
-    ports:
-      - '53:53/tcp'
-      - '53:53/udp'
-      - '84:80/tcp'
-      - '443:443/tcp'
+  # pihole:
+  #   build: pihole
+  #   volumes:
+  #     - pihole_etc:/etc/pihole
+  #     - pihole_dnsmasq:/etc/dnsmasq.d
+  #   cap_add:
+  #     - NET_ADMIN
+  #   restart: unless-stopped
+  #   environment:
+  #     LOCAL_IP: '10.75.0.113'
+  #   privileged: true
+  #   labels:
+  #     io.balena.features.supervisor-api: 1
+  #   ports:
+  #     - '53:53/tcp'
+  #     - '53:53/udp'
+  #     - '84:80/tcp'
+  #     - '443:443/tcp'
   adguard:
     image: adguard/adguardhome:latest
     volumes:
@@ -104,8 +104,8 @@ services:
       - NTP_SERVERS=time.cloudflare.com
       - LOG_LEVEL=0
 volumes:
-  pihole_etc:
-  pihole_dnsmasq:
+  # pihole_etc:
+  # pihole_dnsmasq:
   adguard_conf:
   adguard_work:
   wireguard_config:
