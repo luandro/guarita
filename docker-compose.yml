@@ -3,27 +3,17 @@ version: '2.1'
 services:
   adguard:
     image: adguard/adguardhome:latest
-    volumes:
-      - adguard_conf:/opt/adguardhome/conf
-      - adguard_work:/opt/adguardhome/work
+    network_mode: host
     privileged: true
-    labels:
-      io.balena.features.supervisor-api: 1
-    ports:
-      - '53:53/tcp'
-      - '53:53/udp'
-      - '67:67/udp'
-      - '68:68/udp'
-      - '8081:80/tcp'
-      - '443:443/tcp'
-      - '443:443/udp'
-      - '84:3000/tcp'
-      - '853:853/tcp'
-      - '784:784/udp'
-      - '853:853/udp'
-      - '8853:8853/udp'
-      - '5443:5443/tcp'
-      - '5443:5443/udp'
+    volumes:
+      - 'adguard_work:/opt/adguardhome/work:rw'
+      - 'adguard_conf:/opt/adguardhome/conf:rw'
+    command:
+      - "--no-check-update"
+      - "--web-addr"
+      - "0.0.0.0:84"
+      - "--config"
+      - "/opt/adguardhome/conf/AdGuardHome.yaml"
   # https://github.com/wg-easy/wg-easy
   wg-easy:
     image: weejewel/wg-easy
@@ -45,6 +35,7 @@ services:
     privileged: true
     labels:
       io.balena.features.kernel-modules: "1"
+      io.balena.features.dbus: "1"
   hostname:
     image: balenablocks/hostname:latest
     restart: "no"
@@ -103,6 +94,14 @@ services:
     ports:
       - '5353:53/tcp'
       - '5353:53/udp'
+  squid:
+    image: ubuntu/squid:latest
+    environment:
+      - TZ=UTC
+    ports:
+      - '3128:3128'
+    volumes:
+      - squid-conf:/etc/squid/squid.conf
 volumes:
   adguard_conf:
   adguard_work:
@@ -113,3 +112,4 @@ volumes:
   jellyfin-lib:
   sync-config:
   unbound:
+  squid-conf:
