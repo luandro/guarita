@@ -5,6 +5,8 @@ services:
     build: adguard
     network_mode: host
     privileged: true
+    labels:
+      io.balena.features.dbus: "1"
     volumes:
       - 'adguard_work:/opt/adguardhome/work:rw'
       - 'adguard_conf:/opt/adguardhome/conf:rw'
@@ -15,7 +17,7 @@ services:
       - "--config"
       - "/opt/adguardhome/conf/AdGuardHome.yaml"
   # https://github.com/wg-easy/wg-easy
-  wg-easy:
+  wireguard:
     image: weejewel/wg-easy
     environment:
       - WG_HOST=192.168.0.1

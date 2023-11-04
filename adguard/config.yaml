@@ -2,15 +2,18 @@
 #     name: "."
 #     forward-addr: IP_ADDRESS_OF_SQUID_SERVER
 #     forward-first: yes
+auth:
+  username: admin
+  password: admin
+# users:
+#   name: admin
+#   password: $2a$10$Mx2ZMmNKpK620smLcw6pa.THelPRDzFbHL6ineD0ZImMgQncnGHGe
 http:
   pprof:
     port: 6060
     enabled: false
   address: 0.0.0.0:84
   session_ttl: 720h
-users:
-  - name: luandro
-    password: $2a$10$Mx2ZMmNKpK620smLcw6pa.THelPRDzFbHL6ineD0ZImMgQncnGHGe
 auth_attempts: 5
 block_auth_min: 15
 http_proxy: ""
@@ -19,14 +22,14 @@ theme: auto
 dns:
   bind_hosts:
     - 0.0.0.0
-  port: 5354
+  port: 53
   anonymize_client_ip: false
   ratelimit: 20
   ratelimit_whitelist: []
   refuse_any: true
   upstream_dns:
-    - https://dns10.quad9.net/dns-query
-    - https://unfiltered.adguard-dns.com/dns-query
+    - https://family.adguard-dns.com/dns-query
+    - https://doh.cleanbrowsing.org/doh/family-filter/
   upstream_dns_file: ""
   bootstrap_dns:
     - 9.9.9.10
