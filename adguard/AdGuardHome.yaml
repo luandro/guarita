@@ -127,7 +127,14 @@ filters:
     url: https://adguardteam.github.io/HostlistsRegistry/assets/filter_4.txt
     name: Dan Pollock's List
     id: 1699030303
-
+  - enabled: true
+    url: https://raw.githubusercontent.com/Mafraysse/AdGuard_GameList-Filter/main/AdGuard_games_list.txt
+    name: Games
+    id: 1699469482
+  - enabled: true
+    url: https://blocklistproject.github.io/Lists/adguard/gambling-ags.txt
+    name: Gambling
+    id: 1699469483
 whitelist_filters: []
 user_rules: []
 dhcp:
