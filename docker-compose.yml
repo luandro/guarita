@@ -90,15 +90,14 @@ services:
       - NTP_SERVERS=time.cloudflare.com
       - LOG_LEVEL=0
   calibre:
-    image: lscr.io/linuxserver/calibre
+    image: lscr.io/linuxserver/calibre-web
     environment:
       PGID: 1000
       PUID: 1000
       TZ: America/Belem
+      DOCKER_MODS: linuxserver/mods:universal-calibre
     ports:
-      - 8080:8080
-      - 8181:8181
-      - 81:8081
+      - 81:8083
     volumes:
       - calibre-config:/config
       - calibre-library:/books
