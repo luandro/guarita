@@ -1,19 +1,12 @@
-# forward-zone:
-#     name: "."
-#     forward-addr: IP_ADDRESS_OF_SQUID_SERVER
-#     forward-first: yes
-auth:
-  username: admin
-  password: admin
-# users:
-#   name: admin
-#   password: $2a$10$Mx2ZMmNKpK620smLcw6pa.THelPRDzFbHL6ineD0ZImMgQncnGHGe
 http:
   pprof:
     port: 6060
     enabled: false
   address: 0.0.0.0:84
   session_ttl: 720h
+users:
+  - name: admin
+    password: $2a$10$G6L4V6T1B.80jIgAIPBqJeDaiwvaGmf2rcVXKXKVPXDPQ7fQfL962
 auth_attempts: 5
 block_auth_min: 15
 http_proxy: ""
@@ -28,8 +21,7 @@ dns:
   ratelimit_whitelist: []
   refuse_any: true
   upstream_dns:
-    - https://family.adguard-dns.com/dns-query
-    - https://doh.cleanbrowsing.org/doh/family-filter/
+    - https://dns10.quad9.net/dns-query
   upstream_dns_file: ""
   bootstrap_dns:
     - 9.9.9.10
@@ -55,7 +47,7 @@ dns:
   cache_optimistic: false
   bogus_nxdomain: []
   aaaa_disabled: false
-  enable_dnssec: true
+  enable_dnssec: false
   edns_client_subnet:
     custom_ip: ""
     enabled: false
@@ -108,6 +100,14 @@ filters:
     name: AdAway Default Blocklist
     id: 2
   - enabled: true
+    url: https://raw.githubusercontent.com/capriciousduck/freefire_block/master/block.txt
+    name: Freefire
+    id: 1699355979
+  - enabled: true
+    url: https://raw.githubusercontent.com/MDP43140/BaDomain/main/misc/NoFreeFire.txt
+    name: FreeFire 2
+    id: 1699355980
+  - enabled: true
     url: https://adguardteam.github.io/HostlistsRegistry/assets/filter_12.txt
     name: Dandelion Sprout's Anti-Malware List
     id: 1699030299
@@ -127,6 +127,7 @@ filters:
     url: https://adguardteam.github.io/HostlistsRegistry/assets/filter_4.txt
     name: Dan Pollock's List
     id: 1699030303
+
 whitelist_filters: []
 user_rules: []
 dhcp:
@@ -147,22 +148,22 @@ dhcp:
     ra_slaac_only: false
     ra_allow_slaac: false
 filtering:
-  blocking_ipv4: 10.13.75.113
-  blocking_ipv6: '::'
+  blocking_ipv4: ""
+  blocking_ipv6: ""
   blocked_services:
     schedule:
       time_zone: UTC
     ids: []
   protection_disabled_until: null
   safe_search:
-    enabled: true
+    enabled: false
     bing: true
     duckduckgo: true
     google: true
     pixabay: true
     yandex: true
     youtube: true
-  blocking_mode: custom_ip
+  blocking_mode: default
   parental_block_host: family-block.dns.adguard.com
   safebrowsing_block_host: standard-block.dns.adguard.com
   rewrites: []
@@ -173,7 +174,7 @@ filtering:
   filters_update_interval: 24
   blocked_response_ttl: 10
   filtering_enabled: true
-  parental_enabled: true
+  parental_enabled: false
   safebrowsing_enabled: false
   protection_enabled: true
 clients:
