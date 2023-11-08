@@ -6,15 +6,22 @@ file=/config/firstboot
 if [ ! -e "$file" ]; then
     echo "First run!"
     echo "================================"
-    if [[ $SYNC_ID_PRINCIPAL && $SYNC_NOME_PRINCIPAL && $SYNC_ID_ACERVO && $SYNC_NOME_ACERVO ]]; then
-        echo "=======" "Adding variables" "====="
+    echo "=======" "Adding variables" "====="
+    if [ ! -z "$SYNC_ID_PRINCIPAL" ]; then
         sed -i -r "s/#ID_PRINCIPAL/$SYNC_ID_PRINCIPAL/g" /config/config.xml
+    fi
+    if [ ! -z "$SYNC_NOME_PRINCIPAL" ]; then
         sed -i -r "s/#NOME_PRINCIPAL/$SYNC_NOME_PRINCIPAL/g" /config/config.xml
+    fi
+    if [ ! -z "$SYNC_ID_ACERVO" ]; then
         sed -i -r "s/#ID_ACERVO/$SYNC_ID_ACERVO/g" /config/config.xml
+    fi
+    if [ ! -z "$SYNC_NOME_ACERVO" ]; then
         sed -i -r "s/#NOME_ACERVO/$SYNC_NOME_ACERVO/g" /config/config.xml
     fi
-    if [[ $ADMIN_LOGIN && $ADMIN_PASSWORD]]; then
-        echo "=======" "Adding authentication and setting permissions" "====="
+
+    echo "=======" "Adding authentication and setting permissions" "====="
+    if [ ! -z "${ADMIN_LOGIN}" ] && [ ! -z "${ADMIN_PASSWORD}" ]; then
         syncthing generate --home=/config --gui-user=${ADMIN_LOGIN} --gui-password=${ADMIN_PASSWORD}
     fi
     mkdir -p /data
