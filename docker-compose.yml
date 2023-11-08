@@ -94,7 +94,7 @@ services:
     environment:
       PGID: 1000
       PUID: 1000
-      TZ: America/Brasil
+      TZ: America/Belem
     ports:
       - 81:8083
     volumes:
