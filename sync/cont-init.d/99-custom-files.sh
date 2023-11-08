@@ -19,7 +19,12 @@ if [ ! -e "$file" ]; then
     if [ ! -z "$SYNC_NOME_ACERVO" ]; then
         sed -i -r "s/#NOME_ACERVO/$SYNC_NOME_ACERVO/g" /config/config.xml
     fi
-
+    if [ ! -z "$SYNC_ID_BIBLIOTECA" ]; then
+        sed -i -r "s/#ID_BIBLIOTECA/$SYNC_ID_BIBLIOTECA/g" /config/config.xml
+    fi
+    if [ ! -z "$SYNC_NOME_BIBLIOTECA" ]; then
+        sed -i -r "s/#NOME_BIBLIOTECA/$SYNC_NOME_BIBLIOTECA/g" /config/config.xml
+    fi
     echo "=======" "Adding authentication and setting permissions" "====="
     if [ ! -z "${ADMIN_LOGIN}" ] && [ ! -z "${ADMIN_PASSWORD}" ]; then
         syncthing generate --home=/config --gui-user=${ADMIN_LOGIN} --gui-password=${ADMIN_PASSWORD}

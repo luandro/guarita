@@ -1,9 +1,10 @@
-FROM alpine:3.14
+FROM alpine
 
 RUN apk add py3-pip
 
+ENV KOLIBRI_HTTP_PORT 81
 RUN pip install kolibri
 
-EXPOSE 8080
+EXPOSE 81
 
 CMD kolibri start --foreground

@@ -68,8 +68,9 @@ services:
       PGID: 1000
       TZ: America/Brasil
     volumes:
-      - "sync-config:/config"
-      - "media:/data"
+      - sync-config:/config
+      - media:/data/media
+      - calibre-library:/data/library
     ports:
       - 82:8384
       - 22000:22000/tcp
@@ -119,9 +120,8 @@ services:
       - httpd:/usr/local/apache2/htdocs
     restart: unless-stopped
   kolibri:
+    network_mode: host
     build: kolibri
-    ports:
-      - 87:8080
     volumes:
       - kolibri:/root/.kolibri
       - pulse:/run/pulse
