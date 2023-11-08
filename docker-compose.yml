@@ -118,7 +118,7 @@ services:
       - httpd:/usr/local/apache2/htdocs
     restart: unless-stopped
   kolibri:
-    build: services/kolibri
+    build: kolibri
     ports:
       - 87:8080
     volumes:
