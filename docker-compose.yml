@@ -90,7 +90,7 @@ services:
       - NTP_SERVERS=time.cloudflare.com
       - LOG_LEVEL=0
   calibre:
-    image: lscr.io/linuxserver/calibre-web
+    build: calibre
     environment:
       PGID: 1000
       PUID: 1000
