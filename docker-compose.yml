@@ -49,7 +49,7 @@ services:
     image: jellyfin/jellyfin
     restart: unless-stopped
     ports:
-      - 80:8096
+      - 86:8096
       - 8920:8920 #optional
       - 7359:7359/udp #optional
       - 1900:1900/udp #optional
@@ -89,6 +89,41 @@ services:
     environment:
       - NTP_SERVERS=time.cloudflare.com
       - LOG_LEVEL=0
+  calibre:
+    image: linuxserver/calibre-web
+    environment:
+      PGID: 1000
+      PUID: 1000
+      TZ: America/Brasil
+    ports:
+      - 81:8083
+    volumes:
+      - calibre-config:/config
+      - calibre-library:/books
+  filebrowser:
+    build: filebrowser
+    restart: unless-stopped
+    volumes:
+      - media:/srv/cine
+      - calibre-library:/srv/biblioteca
+      - httpd:/srv/portal
+    ports:
+      - 85:80
+    command: -- c
+  httpd:
+    build: httpd
+    ports:
+      - 80:80
+    volumes:
+      - httpd:/usr/local/apache2/htdocs
+    restart: unless-stopped
+  kolibri:
+    build: services/kolibri
+    ports:
+      - 87:8080
+    volumes:
+      - kolibri:/root/.kolibri
+      - pulse:/run/pulse
 volumes:
   adguard_conf:
   adguard_work:
@@ -98,3 +133,8 @@ volumes:
   media:
   jellyfin-lib:
   sync-config:
+  calibre-config:
+  calibre-library:
+  httpd:
+  kolibri:
+  pulse:
