@@ -1,7 +1,7 @@
 {
     "settings": {
         "key": "j5NU1YcfOeShwZrVvXBL+t2gTHQ79047Or+CDad8tEzj/GTooeBrEhV41C/AvcTgALjKeBC5WscxC8o7QETgpQ==",
-        "signup": true,
+        "signup": false,
         "createUserDir": true,
         "userHomeBasePath": "./users",
         "defaults": {

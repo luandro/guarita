@@ -10,7 +10,7 @@ users:
 auth_attempts: 5
 block_auth_min: 15
 http_proxy: ""
-language: ""
+language: pt-br
 theme: auto
 dns:
   bind_hosts:
@@ -21,7 +21,8 @@ dns:
   ratelimit_whitelist: []
   refuse_any: true
   upstream_dns:
-    - https://dns10.quad9.net/dns-query
+    - https://family.adguard-dns.com/dns-query
+    - 185.228.168.168
   upstream_dns_file: ""
   bootstrap_dns:
     - 9.9.9.10
@@ -155,25 +156,27 @@ dhcp:
     ra_slaac_only: false
     ra_allow_slaac: false
 filtering:
-  blocking_ipv4: ""
-  blocking_ipv6: ""
+  blocking_ipv4: 192.168.0.250
+  blocking_ipv6: '::'
   blocked_services:
     schedule:
       time_zone: UTC
     ids: []
   protection_disabled_until: null
   safe_search:
-    enabled: false
+    enabled: true
     bing: true
     duckduckgo: true
     google: true
     pixabay: true
     yandex: true
     youtube: true
-  blocking_mode: default
+  blocking_mode: custom_ip
   parental_block_host: family-block.dns.adguard.com
   safebrowsing_block_host: standard-block.dns.adguard.com
-  rewrites: []
+  rewrites:
+    - domain: wajapi.com
+      answer: 192.168.0.250
   safebrowsing_cache_size: 1048576
   safesearch_cache_size: 1048576
   parental_cache_size: 1048576
@@ -181,8 +184,8 @@ filtering:
   filters_update_interval: 24
   blocked_response_ttl: 10
   filtering_enabled: true
-  parental_enabled: false
-  safebrowsing_enabled: false
+  parental_enabled: true
+  safebrowsing_enabled: true
   protection_enabled: true
 clients:
   runtime_sources:

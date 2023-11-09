@@ -1,17 +1,31 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Wajapi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            min-height: 100vh;
+            background-image: url('fundo.jpg');
+            background-size: cover;
             display: flex;
+            flex-flow: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background-color: #f0f0f0;
+
+        }
+        h1 {
+            color: white;
+            font-size: 4em;
+            text-transform: uppercase;
+            text-decoration: underline solid;
+        }
+        a {
+            text-decoration: none;
         }
         .service-button {
             margin: 10px;
@@ -22,18 +36,35 @@
             background-color: #007BFF;
             cursor: pointer;
         }
+
         .service-button:hover {
             background-color: #0056b3;
         }
+        .services {
+            padding-top: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            flex-direction: row;
+        }
+        @media (max-width: 600px) {
+            .services {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
+
 <body>
-    <h1>Our Services</h1>
-    <button class="service-button" onclick="window.location.href='http://192.168.0.250:86'">Cine Wajapi</button>
-    <button class="service-button" onclick="window.location.href='http://192.168.0.250:81'">Biblioteca</button>
-    <button class="service-button" onclick="window.location.href='http://192.168.0.250:82'">Sincronização</button>
-    <button class="service-button" onclick="window.location.href='http://192.168.0.250:84'">Guarita</button>
-    <button class="service-button" onclick="window.location.href='http://192.168.0.250:85'">Drive</button>
-    <button class="service-button" onclick="window.location.href='http://192.168.0.250:87'">Educação</button>
+    <h1>Wajapi</h1>
+    <div class="services">
+        <a class="service-button" target="_blank" href='http://192.168.0.250:86'>Cine Wajapi</a>
+        <a class="service-button" target="_blank" href='http://192.168.0.250:81'>Biblioteca</a>
+        <a class="service-button" target="_blank" href='http://192.168.0.250:82'>Sincronização</a>
+        <a class="service-button" target="_blank" href='http://192.168.0.250:84'>Guarita</a>
+        <a class="service-button" target="_blank" href='http://192.168.0.250:85'>Drive</a>
+        <a class="service-button" target="_blank" href='http://192.168.0.250:87'>Educação</a>
+    </div>
 </body>
 </html>
