@@ -1,3 +1,3 @@
 FROM adguard/adguardhome
 
-COPY config.yaml /opt/adguardhome/conf/AdGuardHome.yaml
+COPY AdGuardHome.yaml /opt/adguardhome/conf/AdGuardHome.yaml
