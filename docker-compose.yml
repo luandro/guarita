@@ -123,12 +123,12 @@ services:
     volumes:
       - httpd:/usr/local/apache2/htdocs
     restart: unless-stopped
-  kolibri:
-    network_mode: host
-    build: kolibri
-    volumes:
-      - kolibri:/root/.kolibri
-      - pulse:/run/pulse
+  # kolibri:
+  #   network_mode: host
+  #   build: kolibri
+  #   volumes:
+  #     - kolibri:/root/.kolibri
+  #     - pulse:/run/pulse
 volumes:
   # adguard_conf:
   # adguard_work:
@@ -141,5 +141,5 @@ volumes:
   calibre-config:
   calibre-library:
   httpd:
-  kolibri:
+  # kolibri:
   pulse:
