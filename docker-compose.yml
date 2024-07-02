@@ -1,10 +1,10 @@
 version: '2.1'
 
 services:
-  wifi:
-    build: .
-    environment:
-      - TZ=America/Belem
+  # wifi:
+  #   build: services
+  #   environment:
+  #     - TZ=America/Belem
   # adguard:
   #   build: adguard
   #   network_mode: host
