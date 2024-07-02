@@ -85,9 +85,15 @@ On another terminal ssh into local host which is tunneling the device, using the
 ssh -D 9090 gh_luandro@localhost -p 22222
 ```
 
-Then finally configure a sock5 proxy on the browser using the gui, or with [Chromium](https://www.chromium.org/getting-involved/download-chromium/) installed, run in another terminal:
+Then finally configure a sock5 proxy on the browser using the gui, or with [Chromium](https://www.chromium.org/getting-involved/download-chromium/) or [Firefox](https://www.mozilla.org/firefox) installed, run in another terminal:
 ```
 chromium --proxy-server="socks5://localhost:9090"
+```
+
+or
+
+```
+firefox --proxy-server="socks5://localhost:9090"
 ```
 
 The browser window that opens up will be tunneling the device, so if a router's ip is `192.168.1.1` opening that in the browser will open the router's dashboard if it's running on router's port 80.
