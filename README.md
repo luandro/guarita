@@ -54,11 +54,13 @@ Device Variables apply to all services within the application, and can be applie
 
 | Service | IP Address |
 | ------- | ---------- |
-| Jellyfin | 80 |
+| AdGuard | 84 |
+| Calibre | 81 |
+| File Browser | 85 |
+| Jellyfin | 86 |
+| NTP | 123 |
 | Sync | 82 |
 | Wireguard | 83 |
-| AdGuard | 84 |
-| NTP | 123 |
 
 Please note that these IP addresses are the default ones and can be changed according to your network configuration.
 
