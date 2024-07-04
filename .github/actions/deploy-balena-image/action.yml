@@ -54,7 +54,7 @@ runs:
         balena_cli_version: 17.2.2
         balena_token: ${{inputs.balena_token}}
         balena_cli_commands: >
-          push ${{inputs.balena_fleet}} --draft --release-tag commit ${{inputs.commit}} --release-tag v${{steps.yaml-data.outputs.data}}-draft ${{ inputs.release_tag || steps.get-ref.outputs.tag }}
+          push ${{inputs.balena_fleet}} --debug --draft --release-tag commit ${{inputs.commit}} --release-tag v${{steps.yaml-data.outputs.data}}-draft ${{ inputs.release_tag || steps.get-ref.outputs.tag }}
 
     - name: Balena Deploy Release
       uses: balena-labs-research/community-cli-action@1.0.0
