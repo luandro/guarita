@@ -18,8 +18,8 @@ services:
       - "/opt/adguardhome/conf/AdGuardHome.yaml"
     ports:
       - 53:53/tcp #plain DNS
-        53:53/udp #plain DNS
-        67:67/udp #DHCP
+      - 53:53/udp #plain DNS
+      - 67:67/udp #DHCP
       - 68:68/tcp #DHCP
       - 68:68/udp #DHCP
       - 84:84/tcp #Admin painel
