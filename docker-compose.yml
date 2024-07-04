@@ -1,5 +1,3 @@
-version: '2.1'
-
 services:
   # wifi:
   #   build: services
@@ -74,7 +72,7 @@ services:
     volumes:
       - sync-config:/config
       - media:/data/media
-      - calibre-library:/data/library
+      - kavita-data:/data/library
     ports:
       - 82:8384
       - 22000:22000/tcp
@@ -94,24 +92,25 @@ services:
     environment:
       - NTP_SERVERS=time.cloudflare.com
       - LOG_LEVEL=0
-  calibre:
-    build: calibre
+  kavita:
+    build: kavita
+    container_name: kavita
     environment:
-      PGID: 1000
       PUID: 1000
+      PGID: 1000
       TZ: America/Belem
-      DOCKER_MODS: linuxserver/mods:universal-calibre
-    ports:
-      - 81:8083
     volumes:
-      - calibre-config:/config
-      - calibre-library:/books
+      - kavita-config:/config
+      - kavita-data:/books
+    ports:
+      - 81:5000
+    restart: unless-stopped
   filebrowser:
     build: filebrowser
     restart: unless-stopped
     volumes:
       - media:/srv/cine
-      - calibre-library:/srv/biblioteca
+      - kavita-data:/srv/biblioteca
       - httpd:/srv/portal
     ports:
       - 85:80
@@ -138,8 +137,8 @@ volumes:
   media:
   jellyfin-lib:
   sync-config:
-  calibre-config:
-  calibre-library:
+  kavita-config:
+  kavita-data:
   httpd:
   # kolibri:
   pulse:
