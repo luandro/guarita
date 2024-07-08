@@ -22,20 +22,19 @@ data:
     - BALENA_HOST_CONFIG_gpu_mem: 64
   applicationEnvironmentVariables:
     - INTERFACE: 'eth0'
-    - SET_HOSTNAME: nhandeflix
-    - WEBPASSWORD: 'jekupe'
+    - SET_HOSTNAME: wajapi
     - ADLISTS_URL: '
         https://raw.githubusercontent.com/chadmayfield/my-pihole-blocklists/master/lists/pi_blocklist_porn_top1m.list
         https://raw.githubusercontent.com/kboghdady/youTube_ads_4_pi-hole/master/youtubelist.txt
         '
     - TZ: 'America/Sao_Paulo'
-    - LOCAL_DOMAIN: 'nhandeflix.com'
-    - LOCAL_IP: 192.168.1.13
+    - LOCAL_DOMAIN: 'wajapi.com'
+    - LOCAL_IP: 192.168.0.250
     - SYNC_ID_PRINCIPAL: NJXQYKR-QKAB5H6-HPVA3J6-3RFWNEV-DNRODEM-DLUKMVO-MHVRVB5-CE6ONAN
     - SYNC_NOME_PRINCIPAL: Tecendo Redes
-    - SYNC_ID_ACERVO: gzbu3-uenc4
+    - SYNC_ID_ACERVO: valor_ID
     - SYNC_NOME_ACERVO: Povos Indígenas no Brasil
-    - SYNC_ID_CONFIG: hgehj-9mdva
+    - SYNC_ID_CONFIG: config_ID
     - SYNC_NOME_CONFIG: jellyfin-config
   defaultDeviceType: "raspberrypi3-64"
   supportedDeviceTypes:
