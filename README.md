@@ -77,17 +77,17 @@ balena ssh <uuid>
 Replacing with the device's uuid which can be obtained from the cli or the cloud dashboard. If we want to enter the dashboard of a router on the device's network, first you'll need to tunnel the ssh port:
 
 ```
-balena tunnel <uuid> -p 22222:22222
+balena tunnel <uuid> -p 22222:9999
 ```
 
 On another terminal ssh into local host which is tunneling the device, using the `-D` option:
 ```
-ssh -D 9090 gh_luandro@localhost -p 22222
+ssh -D 9090 gh_luandro@localhost -p 9999
 ```
 
 Then finally configure a sock5 proxy on the browser using the gui, or with [Chromium](https://www.chromium.org/getting-involved/download-chromium/) or [Firefox](https://www.mozilla.org/firefox) installed, run in another terminal:
 ```
-chromium --proxy-server="socks5://localhost:9090"
+chromium --temp-profile --proxy-server="socks5://localhost:9090"
 ```
 
 or
