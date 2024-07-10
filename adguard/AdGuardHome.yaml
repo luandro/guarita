@@ -21,9 +21,9 @@ dns:
   ratelimit_whitelist: []
   refuse_any: true
   upstream_dns:
-    - https://family.adguard-dns.com/dns-query
     - 185.228.168.168
     - [/wajapi.com/]192.168.0.250
+    - https://family.adguard-dns.com/dns-query
   upstream_dns_file: ""
   bootstrap_dns:
     - 9.9.9.10
