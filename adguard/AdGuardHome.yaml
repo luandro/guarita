@@ -1,3 +1,4 @@
+schema_version: 27
 http:
   pprof:
     port: 6060
@@ -208,4 +209,3 @@ os:
   group: ""
   user: ""
   rlimit_nofile: 0
-schema_version: 27
