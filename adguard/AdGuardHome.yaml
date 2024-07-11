@@ -20,9 +20,11 @@ dns:
   ratelimit: 20
   ratelimit_whitelist: []
   refuse_any: true
-  upstream_dns:
-    - [/wajapi.com/]192.168.0.250
   upstream_dns_file: ""
+  upstream_dns:
+    - https://family.adguard-dns.com/dns-query
+    - 185.228.168.168
+    - [/wajapi.com/]192.168.0.250
   bootstrap_dns:
     - 9.9.9.10
     - 149.112.112.10

@@ -3,6 +3,7 @@ version: '2.1'
 services:
   adguard:
     build: adguard
+    restart: unless-stopped
     network_mode: host
     privileged: true
     labels:
