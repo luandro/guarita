@@ -3,6 +3,7 @@ version: '2.1'
 services:
   adguard:
     build: adguard
+    restart: unless-stopped
     network_mode: host
     privileged: true
     labels:
@@ -40,10 +41,10 @@ services:
       - 7359:7359/udp #optional
       - 1900:1900/udp #optional
     volumes:
-      - "jellyfin-config:/config"
-      - "jellyfin-cache:/cache"
-      - "media:/media"
-      - "jellyfin-lib:/opt/vc/lib"
+      - jellyfin-config:/config
+      - jellyfin-cache:/cache
+      - media:/media
+      - jellyfin-lib:/opt/vc/lib
     environment:
       PUID: "1000"
       PGID: "1000"
