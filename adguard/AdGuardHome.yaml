@@ -23,7 +23,6 @@ dns:
   refuse_any: true
   upstream_dns_file: ""
   upstream_dns:
-    - '[/wajapi.com/]192.168.0.250'
     - https://family.adguard-dns.com/dns-query
     - 185.228.168.168
   bootstrap_dns:
@@ -178,6 +177,8 @@ filtering:
   safebrowsing_block_host: standard-block.dns.adguard.com
   rewrites:
     - domain: wajapi.com
+      answer: 192.168.0.250
+    - domain: wajapi.intranet
       answer: 192.168.0.250
   safebrowsing_cache_size: 1048576
   safesearch_cache_size: 1048576

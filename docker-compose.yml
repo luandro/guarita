@@ -56,7 +56,7 @@ services:
     environment:
       SET_HOSTNAME: waiapi
   kavita:
-    build: kavita
+    image: lscr.io/linuxserver/kavita
     container_name: kavita
     environment:
       PUID: 1000
