@@ -48,6 +48,8 @@ services:
     environment:
       PUID: "1000"
       PGID: "1000"
+      VIRTUAL_PORT: 86
+      VIRTUAL_HOST: ${JELLYFIN_DOMAIN}
   hostname:
     image: balenablocks/hostname:latest
     restart: "no"
@@ -100,38 +102,22 @@ services:
   httpd:
     build: httpd
     ports:
-      - 80:80
+      - 83:80
     volumes:
       - httpd:/usr/local/apache2/htdocs
     restart: unless-stopped
-  # kolibri:
-  #   network_mode: host
-  #   build: kolibri
-  #   volumes:
-  #     - kolibri:/root/.kolibri
-  #     - pulse:/run/pulse
-  # # https://github.com/wg-easy/wg-easy
-  # wireguard:
-  #   image: weejewel/wg-easy
-  #   environment:
-  #     - WG_HOST=192.168.0.1
-  #     - PASSWORD=admin123
-  #   volumes:
-  #     - wireguard:/etc/wireguard
-  #   ports:
-  #     - "51820:51820/udp"
-  #     - "83:51821/tcp"
-  #   cap_add:
-  #     - NET_ADMIN
-  #     - SYS_MODULE
-  #   sysctls:
-  #     - net.ipv4.conf.all.src_valid_mark=1
-  #     - net.ipv4.ip_forward=1
-  #   restart: unless-stopped
-  #   privileged: true
-  #   labels:
-  #     io.balena.features.kernel-modules: "1"
-  #     io.balena.features.dbus: "1"
+    environment:
+      VIRTUAL_PORT: 83
+      VIRTUAL_HOST: ${LOCAL_DOMAIN}
+  proxy:
+    build: proxy
+    ports:
+      - 80:80
+    volumes:
+      - '/var/run/docker.sock:/tmp/docker.sock:ro'
+    environment:
+      DEFAULT_HOST: ${LOCAL_DOMAIN}
+
 volumes:
   adguard-conf:
   adguard-work:
@@ -143,6 +129,3 @@ volumes:
   kavita-config:
   kavita-data:
   httpd:
-  # kolibri:
-  # pulse:
-  # wireguard:

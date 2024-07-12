@@ -28,7 +28,8 @@ data:
         https://raw.githubusercontent.com/kboghdady/youTube_ads_4_pi-hole/master/youtubelist.txt
         '
     - TZ: 'America/Sao_Paulo'
-    - LOCAL_DOMAIN: 'wajapi.com'
+    - LOCAL_DOMAIN: 'wajapi.intranet'
+    - JELLYFIN_DOMAIN: 'cine.wajapi.intranet'
     - LOCAL_IP: 192.168.0.250
     - SYNC_ID_PRINCIPAL: NJXQYKR-QKAB5H6-HPVA3J6-3RFWNEV-DNRODEM-DLUKMVO-MHVRVB5-CE6ONAN
     - SYNC_NOME_PRINCIPAL: Tecendo Redes
