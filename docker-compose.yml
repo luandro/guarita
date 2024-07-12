@@ -104,34 +104,7 @@ services:
     volumes:
       - httpd:/usr/local/apache2/htdocs
     restart: unless-stopped
-  # kolibri:
-  #   network_mode: host
-  #   build: kolibri
-  #   volumes:
-  #     - kolibri:/root/.kolibri
-  #     - pulse:/run/pulse
-  # # https://github.com/wg-easy/wg-easy
-  # wireguard:
-  #   image: weejewel/wg-easy
-  #   environment:
-  #     - WG_HOST=192.168.0.1
-  #     - PASSWORD=admin123
-  #   volumes:
-  #     - wireguard:/etc/wireguard
-  #   ports:
-  #     - "51820:51820/udp"
-  #     - "83:51821/tcp"
-  #   cap_add:
-  #     - NET_ADMIN
-  #     - SYS_MODULE
-  #   sysctls:
-  #     - net.ipv4.conf.all.src_valid_mark=1
-  #     - net.ipv4.ip_forward=1
-  #   restart: unless-stopped
-  #   privileged: true
-  #   labels:
-  #     io.balena.features.kernel-modules: "1"
-  #     io.balena.features.dbus: "1"
+
 volumes:
   adguard-conf:
   adguard-work:
@@ -143,6 +116,3 @@ volumes:
   kavita-config:
   kavita-data:
   httpd:
-  # kolibri:
-  # pulse:
-  # wireguard:
