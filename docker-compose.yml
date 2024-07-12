@@ -48,6 +48,8 @@ services:
     environment:
       PUID: "1000"
       PGID: "1000"
+      VIRTUAL_PORT: 86
+      VIRTUAL_HOST: ${JELLYFIN_DOMAIN}
   hostname:
     image: balenablocks/hostname:latest
     restart: "no"
@@ -100,10 +102,17 @@ services:
   httpd:
     build: httpd
     ports:
-      - 80:80
+      - 83:80
     volumes:
       - httpd:/usr/local/apache2/htdocs
     restart: unless-stopped
+    environment:
+      VIRTUAL_PORT: 83
+      VIRTUAL_HOST: ${LOCAL_DOMAIN}
+  proxy:
+    build: proxy
+    ports:
+      - 80:80
 
 volumes:
   adguard-conf:
