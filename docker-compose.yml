@@ -78,6 +78,7 @@ services:
       - sync-config:/config
       - media:/data/media
       - kavita-data:/data/library
+      - ./sync/cont-init.d/:/custom-cont-init.d:ro
     ports:
       - 82:8384
       - 22000:22000/tcp
