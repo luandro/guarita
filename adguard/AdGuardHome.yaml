@@ -177,7 +177,7 @@ filtering:
   parental_block_host: family-block.dns.adguard.com
   safebrowsing_block_host: standard-block.dns.adguard.com
   rewrites:
-    - domain: wajapi.intranet
+    - domain: '*.wajapi.intranet'
       answer: 192.168.0.250
   safebrowsing_cache_size: 1048576
   safesearch_cache_size: 1048576
